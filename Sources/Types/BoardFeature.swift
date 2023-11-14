@@ -6,6 +6,11 @@
 //
 //===----------------------------------------------------------------------===//
 
-public struct PokerKit {
-  public init() { fatalError() }
+public enum BoardFeature {
+  case onePair,
+    twoPair,
+    threeToFlush,
+    threeToOpenEndedStraight,
+    fourToFlush,
+    fourToStraight
 }

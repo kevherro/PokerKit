@@ -60,6 +60,11 @@ extension CustomTarget {
 
 let targets: [CustomTarget] = [
   .target(
+    kind: .hidden,
+    name: "Evaluators",
+    dependencies: ["Types"]
+  ),
+  .target(
     kind: .exported,
     name: "Types"
   ),
@@ -67,6 +72,11 @@ let targets: [CustomTarget] = [
     kind: .testSupport,
     name: "_PokerKitTestSupport",
     dependencies: ["Types"]
+  ),
+  .target(
+    kind: .test,
+    name: "EvaluatorTests",
+    dependencies: ["Evaluators", "_PokerKitTestSupport"]
   ),
   .target(
     kind: .exported,

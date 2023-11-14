@@ -6,6 +6,13 @@
 //
 //===----------------------------------------------------------------------===//
 
-public struct PokerKit {
-  public init() { fatalError() }
+import Types
+
+/// Quickly create a Card.
+public func card(
+  _ rank: Rank,
+  _ suit: Suit? = nil
+) -> Card {
+  let suit = suit ?? Suit.allCases.randomElement()!
+  return Card(rank: rank, suit: suit)
 }
