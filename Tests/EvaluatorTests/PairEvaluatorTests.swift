@@ -59,7 +59,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPair)
   }
 
-  func test_no_top_pair_too_few_holeCards() {
+  func test_no_top_pair_too_few_cards() {
     let hasTopPair = sut.hasTopPair(holeCards: [], communityCards: [])
     expectFalse(hasTopPair)
   }
@@ -176,7 +176,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTopPairTopKicker)
   }
 
-  func test_no_top_pair_top_kicker_too_few_holeCards() {
+  func test_no_top_pair_top_kicker_too_few_cards() {
     let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: [], communityCards: [])
     expectFalse(hasTopPairTopKicker)
   }
@@ -271,7 +271,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasSecondPair)
   }
 
-  func test_no_second_pair_too_few_holeCards() {
+  func test_no_second_pair_too_few_cards() {
     let hasSecondPair = sut.hasSecondPair(holeCards: [], communityCards: [])
     expectFalse(hasSecondPair)
   }
@@ -333,7 +333,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasOverpair)
   }
 
-  func test_no_overpairpair_too_few_holeCards() {
+  func test_no_overpairpair_too_few_cards() {
     let hasOverpair = sut.hasOverpair(holeCards: [], communityCards: [])
     expectFalse(hasOverpair)
   }
@@ -384,7 +384,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasSet)
   }
 
-  func test_no_set_too_few_holeCards() {
+  func test_no_set_too_few_cards() {
     let hasSet = sut.hasSet(holeCards: [], communityCards: [])
     expectFalse(hasSet)
   }
@@ -409,5 +409,80 @@ final class PairEvaluatorTests: PokerKitTestCase {
     ]
     let hasSet = sut.hasSet(holeCards: holeCards, communityCards: communityCards)
     expectFalse(hasSet)
+  }
+
+  // MARK: Three Of A Kind
+
+  func test_three_of_a_kind() {
+    let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .diamonds),
+      card(.two, .clubs),
+    ]
+    let hasThreeOfAKind = sut.hasThreeOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasThreeOfAKind)
+  }
+
+  func test_three_of_a_kind_two_board_pairs() {
+    let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .diamonds),
+      card(.two, .clubs),
+      card(.two, .diamonds),
+    ]
+    let hasThreeOfAKind = sut.hasThreeOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasThreeOfAKind)
+  }
+
+  func test_three_of_a_kind_and_pair() {
+    let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .diamonds),
+      card(.king, .clubs),
+    ]
+    let hasThreeOfAKind = sut.hasThreeOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasThreeOfAKind)
+  }
+
+  func test_three_of_a_kind_two_threes_of_a_kind() {
+    let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .diamonds),
+      card(.king, .clubs),
+      card(.king, .diamonds),
+    ]
+    let hasThreeOfAKind = sut.hasThreeOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasThreeOfAKind)
+  }
+
+  func test_no_three_of_a_kind_too_few_cards() {
+    let hasThreeOfAKind = sut.hasThreeOfAKind(holeCards: [], communityCards: [])
+    expectFalse(hasThreeOfAKind)
+  }
+
+  func test_no_three_of_a_kind_set() {
+    let holeCards = [card(.ace, .diamonds), card(.ace, .hearts)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.king, .hearts),
+      card(.two, .clubs),
+    ]
+    let hasThreeOfAKind = sut.hasThreeOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasThreeOfAKind)
+  }
+
+  func test_no_three_of_a_kind_quads() {
+    let holeCards = [card(.ace, .spades), card(.king, .hearts)]
+    let communityCards = [
+      card(.ace, .diamonds),
+      card(.ace, .hearts),
+      card(.ace, .clubs),
+    ]
+    let hasThreeOfAKind = sut.hasThreeOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasThreeOfAKind)
   }
 }

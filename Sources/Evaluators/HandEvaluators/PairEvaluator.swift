@@ -132,13 +132,23 @@ public struct PairEvaluator {
     return communityCards.map(\.rank).filter { $0 == holeCards[0].rank }.count == 1
   }
 
-  // MARK: Three Of A Kind
-
-  func hasThreeOfAKind(
+  /// Three-of-a-kind, using one hole card.
+  ///
+  /// - Parameters:
+  ///   - holeCards: The player's hole cards.
+  ///   - communityCards: The community cards.
+  ///
+  /// - Returns: True if the player has three-of-a-kind, false otherwise.
+  public func hasThreeOfAKind(
     holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
-    return false
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+    guard !hasPair(holeCards) else { return false }
+    let communityRanksHistogram = communityCards.rankHistogram()
+    let communityPairsRanks = communityRanksHistogram.filter { $0.value == 2 }.map(\.key)
+    return communityPairsRanks.contains(holeCards[0].rank)
+      || communityPairsRanks.contains(holeCards[1].rank)
   }
 
   // MARK: Four Of A Kind
