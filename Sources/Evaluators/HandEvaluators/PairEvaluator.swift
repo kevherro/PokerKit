@@ -116,7 +116,7 @@ public struct PairEvaluator {
     return false
   }
 
-  /// Three-of-a-kind, using both hole cards.
+  /// Three cards of the same rank, using both hole cards.
   ///
   /// - Parameters:
   ///   - holeCards: The player's hole cards.
@@ -132,7 +132,7 @@ public struct PairEvaluator {
     return communityCards.map(\.rank).filter { $0 == holeCards[0].rank }.count == 1
   }
 
-  /// Three-of-a-kind, using one hole card.
+  /// Three cards of the same rank, using one hole card.
   ///
   /// - Parameters:
   ///   - holeCards: The player's hole cards.
@@ -151,13 +151,20 @@ public struct PairEvaluator {
       || communityPairsRanks.contains(holeCards[1].rank)
   }
 
-  // MARK: Four Of A Kind
-
-  func hasFourOfAKind(
+  /// Four cards of the same rank, using any amount of hole cards.
+  ///
+  /// - Parameters:
+  ///   - holeCards: The player's hole cards.
+  ///   - communityCards: The community cards.
+  ///
+  /// - Returns: True if the player has four-of-a-kind, false otherwise.
+  public func hasFourOfAKind(
     holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
-    return false
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+    let histogram = (holeCards + communityCards).rankHistogram()
+    return histogram.values.contains(where: { $0 == 4 })
   }
 
   // MARK: Full House

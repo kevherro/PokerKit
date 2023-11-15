@@ -485,4 +485,104 @@ final class PairEvaluatorTests: PokerKitTestCase {
     let hasThreeOfAKind = sut.hasThreeOfAKind(holeCards: holeCards, communityCards: communityCards)
     expectFalse(hasThreeOfAKind)
   }
+
+  // MARK: Four Of A Kind
+
+  func test_four_of_a_kind_one_hole_card() {
+    let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .diamonds),
+      card(.ace, .spades),
+    ]
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasFourOfAKind)
+  }
+
+  func test_four_of_a_kind_both_hole_cards() {
+    let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .spades),
+      card(.king, .spades),
+    ]
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasFourOfAKind)
+  }
+
+  func test_four_of_a_kind_no_hole_card() {
+    let holeCards = [card(.king, .hearts), card(.queen, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .spades),
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+    ]
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasFourOfAKind)
+  }
+
+  func test_four_of_a_kind_set() {
+    let holeCards = [card(.king, .hearts), card(.king, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .spades),
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+      card(.king, .clubs),
+    ]
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasFourOfAKind)
+  }
+
+  func test_four_of_a_kind_pair() {
+    let holeCards = [card(.king, .hearts), card(.queen, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .spades),
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+      card(.king, .clubs),
+    ]
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasFourOfAKind)
+  }
+
+  func test_no_four_of_a_kind_too_few_cards() {
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: [], communityCards: [])
+    expectFalse(hasFourOfAKind)
+  }
+
+  func test_no_four_of_a_kind_three_of_a_kind() {
+    let holeCards = [card(.ace, .hearts), card(.queen, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .spades),
+      card(.king, .clubs),
+    ]
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasFourOfAKind)
+  }
+
+  func test_no_four_of_a_kind_pair() {
+    let holeCards = [card(.ace, .hearts), card(.queen, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.king, .clubs),
+      card(.ten, .spades),
+    ]
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasFourOfAKind)
+  }
+
+  func test_no_four_of_a_kind_junk() {
+    let holeCards = [card(.queen, .hearts), card(.nine, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.king, .clubs),
+      card(.ten, .spades),
+    ]
+    let hasFourOfAKind = sut.hasFourOfAKind(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasFourOfAKind)
+  }
 }
