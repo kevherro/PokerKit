@@ -78,7 +78,7 @@ public struct PairEvaluator {
   // MARK: Second Pair
 
   func hasSecondPair(
-    cards: [Card],
+    holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
     return false
@@ -87,7 +87,7 @@ public struct PairEvaluator {
   // MARK: Overpair
 
   func hasOverpair(
-    cards: [Card],
+    holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
     return false
@@ -96,7 +96,7 @@ public struct PairEvaluator {
   // MARK: Two Pair
 
   func hasTwoPair(
-    cards: [Card],
+    holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
     return false
@@ -105,7 +105,7 @@ public struct PairEvaluator {
   // MARK: Set
 
   func hasSet(
-    cards: [Card],
+    holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
     return false
@@ -114,7 +114,7 @@ public struct PairEvaluator {
   // MARK: Three Of A Kind
 
   func hasThreeOfAKind(
-    cards: [Card],
+    holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
     return false
@@ -123,7 +123,7 @@ public struct PairEvaluator {
   // MARK: Four Of A Kind
 
   func hasFourOfAKind(
-    cards: [Card],
+    holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
     return false
@@ -132,7 +132,7 @@ public struct PairEvaluator {
   // MARK: Full House
 
   func hasFullHouse(
-    cards: [Card],
+    holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
     return false
@@ -140,8 +140,12 @@ public struct PairEvaluator {
 
   // MARK: -
 
-  private func check(holeCards: [Card], communityCards: [Card]) -> Bool {
-    return holeCards.count == 2 && communityCards.count >= 3 && communityCards.count <= 5
+  private func check(
+    holeCards: [Card],
+    communityCards: [Card]
+  ) -> Bool {
+    return holeCards.count == 2
+      && communityCards.count >= 3 && communityCards.count <= 5
   }
 
   private func highestRank(in cards: [Card]) -> Rank? {
