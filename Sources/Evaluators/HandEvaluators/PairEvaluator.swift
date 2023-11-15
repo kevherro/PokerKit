@@ -75,13 +75,21 @@ public struct PairEvaluator {
     return kicker == highestCardNotOnBoard
   }
 
-  // MARK: Second Pair
-
-  func hasSecondPair(
+  /// A hand of one pair, using the second highest card on the board.
+  ///
+  /// - Parameters:
+  ///   - holeCards: The player's hole cards.
+  ///   - communityCards: The community cards.
+  ///
+  /// - Returns: True if the player has second pair, false otherwise.
+  public func hasSecondPair(
     holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
-    return false
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+
+    guard let secondHighestRankInCommunity = secondHighestRank(in: communityCards) else { return false }
+    return holeCards.contains(where: { $0.rank == secondHighestRankInCommunity })
   }
 
   // MARK: Overpair
@@ -150,5 +158,11 @@ public struct PairEvaluator {
 
   private func highestRank(in cards: [Card]) -> Rank? {
     return cards.max(by: { $0.rank < $1.rank })?.rank
+  }
+
+  private func secondHighestRank(in cards: [Card]) -> Rank? {
+    guard cards.count >= 2 else { return nil }
+    let ranks = cards.map(\.rank).sorted(by: >)
+    return ranks[1]
   }
 }
