@@ -92,13 +92,22 @@ public struct PairEvaluator {
     return holeCards.contains(where: { $0.rank == secondHighestRankInCommunity })
   }
 
-  // MARK: Overpair
-
-  func hasOverpair(
+  /// A pocket pair higher than any other card on the board.
+  ///
+  /// - Parameters:
+  ///   - holeCards: The player's hole cards.
+  ///   - communityCards: The community cards.
+  ///
+  /// - Returns: True if the player has overpair, false otherwise.
+  public func hasOverpair(
     holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
-    return false
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+
+    guard holeCards[0].rank == holeCards[1].rank else { return false }
+    guard let highestRankInCommunity = highestRank(in: communityCards) else { return false }
+    return holeCards[0].rank > highestRankInCommunity
   }
 
   // MARK: Two Pair

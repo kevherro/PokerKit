@@ -319,4 +319,55 @@ final class PairEvaluatorTests: PokerKitTestCase {
     let hasSecondPair = sut.hasTopPair(holeCards: holeCards, communityCards: communityCards)
     expectFalse(hasSecondPair)
   }
+
+  // MARK: Overpair
+
+  func test_overpair() {
+    let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
+    let communityCards = [
+      card(.king, .hearts),
+      card(.queen, .diamonds),
+      card(.two, .clubs),
+    ]
+    let hasOverpair = sut.hasOverpair(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasOverpair)
+  }
+
+  func test_no_overpairpair_too_few_holeCards() {
+    let hasOverpair = sut.hasOverpair(holeCards: [], communityCards: [])
+    expectFalse(hasOverpair)
+  }
+
+  func test_no_overpair_no_pair() {
+    let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
+    let communityCards = [
+      card(.ace, .diamonds),
+      card(.five, .hearts),
+      card(.two, .clubs),
+    ]
+    let hasOverpair = sut.hasOverpair(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasOverpair)
+  }
+
+  func test_no_overpair_too_low() {
+    let holeCards = [card(.two, .diamonds), card(.two, .hearts)]
+    let communityCards = [
+      card(.ace, .diamonds),
+      card(.king, .hearts),
+      card(.two, .clubs),
+    ]
+    let hasOverpair = sut.hasOverpair(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasOverpair)
+  }
+
+  func test_no_overpair_paired_board() {
+    let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
+    let communityCards = [
+      card(.ace, .diamonds),
+      card(.ace, .hearts),
+      card(.two, .clubs),
+    ]
+    let hasOverpair = sut.hasOverpair(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasOverpair)
+  }
 }
