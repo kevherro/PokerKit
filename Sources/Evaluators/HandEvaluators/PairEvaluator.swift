@@ -16,11 +16,11 @@ import Types
 /// Therefore, it's possible for multiple methods to return `true` for the same hand.
 public struct PairEvaluator {
 
-  /// A hand of one pair, using the highest card on the board.
+  /// Checks for a hand of one pair, using the highest card on the board.
   ///
   /// - Parameters:
-  ///   - holeCards: The player's hole cards.
-  ///   - communityCards: The community cards.
+  ///   - holeCards: An array of type `Card` representing the player's hole cards.
+  ///   - communityCards: An array of type `Card` representing the cards on the board.
   ///
   /// - Returns: True if the player has top pair, false otherwise.
   public func hasTopPair(
@@ -32,12 +32,12 @@ public struct PairEvaluator {
     return holeCards.contains(where: { $0.rank == highestRankInCommunity })
   }
 
-  /// A hand of one pair, using the highest card on the board,
+  /// Checks for a hand of one pair, using the highest card on the board,
   /// and holding the best possible kicker.
   ///
   /// - Parameters:
-  ///   - holeCards: The player's hole cards.
-  ///   - communityCards: The community cards.
+  ///   - holeCards: An array of type `Card` representing the player's hole cards.
+  ///   - communityCards: An array of type `Card` representing the cards on the board.
   ///
   /// - Returns: True if the player has top pair top kicker, false otherwise.
   public func hasTopPairTopKicker(
@@ -73,11 +73,11 @@ public struct PairEvaluator {
     return kicker == highestCardNotOnBoard
   }
 
-  /// A hand of one pair, using the second highest card on the board.
+  /// Checks for a hand of one pair, using the second highest card on the board.
   ///
   /// - Parameters:
-  ///   - holeCards: The player's hole cards.
-  ///   - communityCards: The community cards.
+  ///   - holeCards: An array of type `Card` representing the player's hole cards.
+  ///   - communityCards: An array of type `Card` representing the cards on the board.
   ///
   /// - Returns: True if the player has second pair, false otherwise.
   public func hasSecondPair(
@@ -89,11 +89,11 @@ public struct PairEvaluator {
     return holeCards.contains(where: { $0.rank == secondHighestRankInCommunity })
   }
 
-  /// A pocket pair higher than any other card on the board.
+  /// Checks for a pocket pair higher than any other card on the board.
   ///
   /// - Parameters:
-  ///   - holeCards: The player's hole cards.
-  ///   - communityCards: The community cards.
+  ///   - holeCards: An array of type `Card` representing the player's hole cards.
+  ///   - communityCards: An array of type `Card` representing the cards on the board.
   ///
   /// - Returns: True if the player has overpair, false otherwise.
   public func hasOverpair(
@@ -106,11 +106,11 @@ public struct PairEvaluator {
     return holeCards[0].rank > highestRankInCommunity
   }
 
-  /// Three cards of the same rank, using both hole cards.
+  /// Checks for three cards of the same rank, using both hole cards.
   ///
   /// - Parameters:
-  ///   - holeCards: The player's hole cards.
-  ///   - communityCards: The community cards.
+  ///   - holeCards: An array of type `Card` representing the player's hole cards.
+  ///   - communityCards: An array of type `Card` representing the cards on the board.
   ///
   /// - Returns: True if the player has a set, false otherwise.
   public func hasSet(
