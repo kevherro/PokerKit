@@ -17,8 +17,7 @@ import Types
 /// For example, a hand could satisfy both `hasTopPair` and `hasTrips`.
 public struct PairEvaluator {
 
-  /// A hand of one pair, using the highest card on the board,
-  /// regardless of how many times that card appears on the board.
+  /// A hand of one pair, using the highest card on the board.
   ///
   /// - Parameters:
   ///   - holeCards: The player's hole cards.
@@ -29,22 +28,51 @@ public struct PairEvaluator {
     holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
-    guard let highestRankInCommunityCards = highestRank(in: communityCards) else { return false }
-    return holeCards.contains { $0.rank == highestRankInCommunityCards }
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+
+    guard let highestRankInCommunity = highestRank(in: communityCards) else { return false }
+    return holeCards.contains(where: { $0.rank == highestRankInCommunity })
   }
 
-  private func highestRank(in cards: [Card]) -> Rank? {
-    let sortedRanks = cards.map(\.rank).sorted(by: >)
-    return sortedRanks.first
-  }
-
-  // MARK: Top Pair Top Kicker
-
+  /// A hand of one pair, using the highest card on the board,
+  /// and holding the best possible kicker.
+  ///
+  /// - Parameters:
+  ///   - holeCards: The player's hole cards.
+  ///   - communityCards: The community cards.
+  ///
+  /// - Returns: True if the player has top pair top kicker, false otherwise.
   func hasTopPairTopKicker(
-    cards: [Card],
+    holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
-    return false
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+
+    // Check if one of the hole cards forms the top pair with the board.
+    guard let highestRankInCommunity = highestRank(in: communityCards) else { return false }
+    if !holeCards.contains(where: { $0.rank == highestRankInCommunity }) {
+      return false
+    }
+
+    // Determine the kicker,
+    // which is the highest hole card not part of the top pair.
+    guard let kicker = holeCards.first(where: { $0.rank != highestRankInCommunity })?.rank else {
+      return false
+    }
+
+    // Find the highest card not on the board,
+    // considering both the community and hole cards.
+    guard
+      let highestCardNotOnBoard = Rank
+        .allCases
+        .reversed()
+        .first(where: { rank in !communityCards.contains(where: { $0.rank == rank }) })
+    else {
+      return false
+    }
+
+    // Check if the kicker is the highest possible kicker not represented on the board.
+    return kicker == highestCardNotOnBoard
   }
 
   // MARK: Second Pair
@@ -108,5 +136,15 @@ public struct PairEvaluator {
     communityCards: [Card]
   ) -> Bool {
     return false
+  }
+
+  // MARK: -
+
+  private func check(holeCards: [Card], communityCards: [Card]) -> Bool {
+    return holeCards.count == 2 && communityCards.count >= 3 && communityCards.count <= 5
+  }
+
+  private func highestRank(in cards: [Card]) -> Rank? {
+    return cards.max(by: { $0.rank < $1.rank })?.rank
   }
 }
