@@ -14,7 +14,6 @@ import Types
 ///
 /// - Note: `PairEvaluator` does not rank hand strengths.
 /// Therefore, it's possible for multiple methods to return `true` for the same hand.
-/// For example, a hand could satisfy both `hasTopPair` and `hasTrips`.
 public struct PairEvaluator {
 
   /// A hand of one pair, using the highest card on the board.
@@ -107,15 +106,6 @@ public struct PairEvaluator {
     return holeCards[0].rank > highestRankInCommunity
   }
 
-  // MARK: Two Pair
-
-  func hasTwoPair(
-    holeCards: [Card],
-    communityCards: [Card]
-  ) -> Bool {
-    return false
-  }
-
   /// Three cards of the same rank, using both hole cards.
   ///
   /// - Parameters:
@@ -130,50 +120,6 @@ public struct PairEvaluator {
     guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
     guard hasPair(holeCards) else { return false }
     return communityCards.map(\.rank).filter { $0 == holeCards[0].rank }.count == 1
-  }
-
-  /// Three cards of the same rank, using one hole card.
-  ///
-  /// - Parameters:
-  ///   - holeCards: The player's hole cards.
-  ///   - communityCards: The community cards.
-  ///
-  /// - Returns: True if the player has three-of-a-kind, false otherwise.
-  public func hasThreeOfAKind(
-    holeCards: [Card],
-    communityCards: [Card]
-  ) -> Bool {
-    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
-    guard !hasPair(holeCards) else { return false }
-    let communityRanksHistogram = communityCards.rankHistogram()
-    let communityPairsRanks = communityRanksHistogram.filter { $0.value == 2 }.map(\.key)
-    return communityPairsRanks.contains(holeCards[0].rank)
-      || communityPairsRanks.contains(holeCards[1].rank)
-  }
-
-  /// Four cards of the same rank, using any amount of hole cards.
-  ///
-  /// - Parameters:
-  ///   - holeCards: The player's hole cards.
-  ///   - communityCards: The community cards.
-  ///
-  /// - Returns: True if the player has four-of-a-kind, false otherwise.
-  public func hasFourOfAKind(
-    holeCards: [Card],
-    communityCards: [Card]
-  ) -> Bool {
-    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
-    let histogram = (holeCards + communityCards).rankHistogram()
-    return histogram.values.contains(where: { $0 == 4 })
-  }
-
-  // MARK: Full House
-
-  func hasFullHouse(
-    holeCards: [Card],
-    communityCards: [Card]
-  ) -> Bool {
-    return false
   }
 
   // MARK: -
