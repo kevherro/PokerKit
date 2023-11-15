@@ -42,7 +42,7 @@ public struct PairEvaluator {
   ///   - communityCards: The community cards.
   ///
   /// - Returns: True if the player has top pair top kicker, false otherwise.
-  func hasTopPairTopKicker(
+  public func hasTopPairTopKicker(
     holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
