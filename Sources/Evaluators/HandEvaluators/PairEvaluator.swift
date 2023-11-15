@@ -29,7 +29,6 @@ public struct PairEvaluator {
     communityCards: [Card]
   ) -> Bool {
     guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
-
     guard let highestRankInCommunity = highestRank(in: communityCards) else { return false }
     return holeCards.contains(where: { $0.rank == highestRankInCommunity })
   }
@@ -87,7 +86,6 @@ public struct PairEvaluator {
     communityCards: [Card]
   ) -> Bool {
     guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
-
     guard let secondHighestRankInCommunity = secondHighestRank(in: communityCards) else { return false }
     return holeCards.contains(where: { $0.rank == secondHighestRankInCommunity })
   }
@@ -104,8 +102,7 @@ public struct PairEvaluator {
     communityCards: [Card]
   ) -> Bool {
     guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
-
-    guard holeCards[0].rank == holeCards[1].rank else { return false }
+    guard hasPair(holeCards) else { return false }
     guard let highestRankInCommunity = highestRank(in: communityCards) else { return false }
     return holeCards[0].rank > highestRankInCommunity
   }
@@ -119,13 +116,20 @@ public struct PairEvaluator {
     return false
   }
 
-  // MARK: Set
-
-  func hasSet(
+  /// Three-of-a-kind, using both hole cards.
+  ///
+  /// - Parameters:
+  ///   - holeCards: The player's hole cards.
+  ///   - communityCards: The community cards.
+  ///
+  /// - Returns: True if the player has a set, false otherwise.
+  public func hasSet(
     holeCards: [Card],
     communityCards: [Card]
   ) -> Bool {
-    return false
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+    guard hasPair(holeCards) else { return false }
+    return communityCards.map(\.rank).filter { $0 == holeCards[0].rank }.count == 1
   }
 
   // MARK: Three Of A Kind
@@ -173,5 +177,10 @@ public struct PairEvaluator {
     guard cards.count >= 2 else { return nil }
     let ranks = cards.map(\.rank).sorted(by: >)
     return ranks[1]
+  }
+
+  private func hasPair(_ holeCards: [Card]) -> Bool {
+    guard holeCards.count == 2 else { return false }
+    return holeCards[0].rank == holeCards[1].rank
   }
 }

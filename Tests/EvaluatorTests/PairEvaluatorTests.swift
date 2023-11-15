@@ -370,4 +370,44 @@ final class PairEvaluatorTests: PokerKitTestCase {
     let hasOverpair = sut.hasOverpair(holeCards: holeCards, communityCards: communityCards)
     expectFalse(hasOverpair)
   }
+
+  // MARK: Set
+
+  func test_set() {
+    let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
+    let communityCards = [
+      card(.ace, .hearts),
+      card(.queen, .diamonds),
+      card(.two, .clubs),
+    ]
+    let hasSet = sut.hasSet(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasSet)
+  }
+
+  func test_no_set_too_few_holeCards() {
+    let hasSet = sut.hasSet(holeCards: [], communityCards: [])
+    expectFalse(hasSet)
+  }
+
+  func test_no_set_no_pair() {
+    let holeCards = [card(.ace, .diamonds), card(.two, .hearts)]
+    let communityCards = [
+      card(.ace, .diamonds),
+      card(.ace, .hearts),
+      card(.two, .clubs),
+    ]
+    let hasSet = sut.hasSet(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasSet)
+  }
+
+  func test_no_set_quads() {
+    let holeCards = [card(.ace, .diamonds), card(.ace, .hearts)]
+    let communityCards = [
+      card(.ace, .diamonds),
+      card(.ace, .hearts),
+      card(.two, .clubs),
+    ]
+    let hasSet = sut.hasSet(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasSet)
+  }
 }
