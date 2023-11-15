@@ -104,7 +104,9 @@ let _platforms: [SupportedPlatform] = [
   .iOS(.v16),
 ]
 
-let _dependencies: [Package.Dependency] = []
+let _dependencies: [Package.Dependency] = [
+  .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0")
+]
 
 let package = Package(
   name: "PokerKit",
