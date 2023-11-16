@@ -13,7 +13,7 @@ import Types
 /// without considering the overall texture of the board.
 /// Therefore, it's possible for multiple methods to return `true` for the same board.
 struct BoardEvaluator {
-  private let straights: [Set<Rank>] = [
+  private let possibleStraights: [Set<Rank>] = [
     [Rank.ace, .two, .three, .four, .five],
     [Rank.two, .three, .four, .five, .six],
     [Rank.three, .four, .five, .six, .seven],
@@ -37,22 +37,8 @@ struct BoardEvaluator {
 
     let uniqueRanks = Set(cards.ranks())
 
-    // First, check for a complete straight.
-    for straight in straights {
-      if straight.isSubset(of: uniqueRanks) {
-        return false  // Board contains a complete straight.
-      }
-    }
-
-    // Then check for three to a straight.
-    for straight in straights {
-      let intersection = uniqueRanks.intersection(straight)
-      if intersection.count >= 3 {
-        return true
-      }
-    }
-
-    return false
+    return !isNToStraight(5, ranks: uniqueRanks)
+      && isNToStraight(3, ranks: uniqueRanks)
   }
 
   @inlinable
@@ -60,9 +46,19 @@ struct BoardEvaluator {
     return false
   }
 
+  /// Checks if any four cards on the board can potentially form a straight.
+  ///
+  /// - Parameter cards: An array of type `Card` that represents the cards on the board.
+  ///
+  /// - Returns: True if there is a potential straight, false otherwise.
   @inlinable
-  public func hasFourToStraight(_ cards: [Card]) -> Bool {
-    return false
+  public func hasFourToStraight(cards: [Card]) -> Bool {
+    guard cards.count >= 3, cards.count <= 5 else { return false }
+
+    let uniqueRanks = Set(cards.ranks())
+
+    return !isNToStraight(5, ranks: uniqueRanks)
+      && isNToStraight(4, ranks: uniqueRanks)
   }
 
   @inlinable
@@ -82,6 +78,21 @@ struct BoardEvaluator {
 
   @inlinable
   public func hasTwoPair(cards: [Card]) -> Bool {
+    return false
+  }
+
+  // MARK: -
+
+  private func isNToStraight(
+    _ n: Int,
+    ranks: Set<Rank>
+  ) -> Bool {
+    for straight in possibleStraights {
+      let intersection = ranks.intersection(straight)
+      if intersection.count >= n {
+        return true
+      }
+    }
     return false
   }
 }
