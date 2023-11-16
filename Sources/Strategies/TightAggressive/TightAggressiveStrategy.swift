@@ -6,6 +6,4 @@
 //
 //===----------------------------------------------------------------------===//
 
-enum Strategy {
-  case tightAggressive
-}
+struct TightAggressiveStrategy: StrategyProtocol {}

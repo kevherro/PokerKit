@@ -11,8 +11,8 @@ protocol StrategyProtocol {}
 struct StrategyFactory {
   func makeStrategy(_ strategy: Strategy) -> StrategyProtocol {
     switch strategy {
-    default:
-      fatalError()
+    case .tightAggressive:
+      return TightAggressiveStrategy()
     }
   }
 }
