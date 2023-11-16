@@ -330,4 +330,61 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     let hasThreeToFlush = sut.hasThreeToFlush(cards: cards)
     expectFalse(hasThreeToFlush)
   }
+
+  // MARK: Four To Flush
+
+  func test_four_to_flush() {
+    let cards = [
+      card(.four, .hearts),
+      card(.five, .hearts),
+      card(.six, .hearts),
+      card(.seven, .hearts),
+    ]
+    let hasFourToFlush = sut.hasFourToFlush(cards: cards)
+    expectTrue(hasFourToFlush)
+  }
+
+  func test_no_four_to_flush_invalid_dupes() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .hearts),
+      card(.five, .hearts),
+      card(.six, .hearts),
+    ]
+    let hasFourToFlush = sut.hasFourToFlush(cards: cards)
+    expectFalse(hasFourToFlush)
+  }
+
+  func test_no_four_to_flush_too_few_flush_cards() {
+    let cards = [
+      card(.four, .hearts),
+      card(.five, .hearts),
+      card(.six, .hearts),
+      card(.seven, .diamonds),
+    ]
+    let hasFourToFlush = sut.hasFourToFlush(cards: cards)
+    expectFalse(hasFourToFlush)
+  }
+
+  func test_no_four_to_flush_too_few_cards() {
+    let cards = [
+      card(.four, .hearts),
+      card(.five, .hearts),
+    ]
+    let hasFourToFlush = sut.hasFourToFlush(cards: cards)
+    expectFalse(hasFourToFlush)
+  }
+
+  func test_no_four_to_flush_too_many_cards() {
+    let cards = [
+      card(.four, .hearts),
+      card(.five, .hearts),
+      card(.six, .hearts),
+      card(.seven, .hearts),
+      card(.eight, .hearts),
+      card(.nine, .hearts),
+    ]
+    let hasFourToFlush = sut.hasFourToFlush(cards: cards)
+    expectFalse(hasFourToFlush)
+  }
 }
