@@ -95,6 +95,18 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFlush)
   }
 
+  func testNoFlush_invalidDupes() {
+    let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
+    let communityCards = [
+      card(.queen, .hearts),
+      card(.queen, .hearts),
+      card(.nine, .hearts),
+      card(.ten, .hearts),
+    ]
+    let hasFlush = sut.hasFlush(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasFlush)
+  }
+
   // MARK: Nut Flush
 
   func testHasNutFlush() {
@@ -172,6 +184,18 @@ final class FlushEvaluatorTests: PokerKitTestCase {
       card(.nine, .diamonds),
       card(.ten, .diamonds),
       card(.nine, .clubs),
+    ]
+    let hasNutFlush = sut.hasNutFlush(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasNutFlush)
+  }
+
+  func testNutNoFlush_invalidDupes() {
+    let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
+    let communityCards = [
+      card(.queen, .hearts),
+      card(.queen, .hearts),
+      card(.nine, .hearts),
+      card(.ten, .hearts),
     ]
     let hasNutFlush = sut.hasNutFlush(holeCards: holeCards, communityCards: communityCards)
     expectFalse(hasNutFlush)
