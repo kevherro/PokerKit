@@ -8,96 +8,46 @@
 
 import Types
 
+/// `BoardEvaluator` provides methods to evaluate specific board features.
+/// Each method independently checks for a particular board feature,
+/// without considering the overall texture of the board.
+/// Therefore, it's possible for multiple methods to return `true` for the same board.
 struct BoardEvaluator {
+  private let straights: [Set<Rank>] = [
+    [Rank.ace, .two, .three, .four, .five],
+    [Rank.two, .three, .four, .five, .six],
+    [Rank.three, .four, .five, .six, .seven],
+    [Rank.four, .five, .six, .seven, .eight],
+    [Rank.five, .six, .seven, .eight, .nine],
+    [Rank.six, .seven, .eight, .nine, .ten],
+    [Rank.seven, .eight, .nine, .ten, .jack],
+    [Rank.eight, .nine, .ten, .jack, .queen],
+    [Rank.nine, .ten, .jack, .queen, .king],
+    [Rank.ten, .jack, .queen, .king, .ace],
+  ]
+
+  /// Checks if any three cards on the board can potentially form a straight.
+  ///
+  /// - Parameter cards: An array of type `Card` that represents the cards on the board.
+  ///
+  /// - Returns: True if there is a potential straight, false otherwise.
   @inlinable
-  func getFeatures(cards: [Card]) -> Set<BoardFeature> {
-    guard cards.count >= 3 && cards.count <= 5 else { return [] }
+  public func hasThreeToStraight(cards: [Card]) -> Bool {
+    guard cards.count >= 3, cards.count <= 5 else { return false }
 
-    var features = Set<BoardFeature>()
+    let uniqueRanks = Set(cards.ranks())
 
-    if hasThreeToOpenEndedStraight(cards) {
-      features.insert(.threeToOpenEndedStraight)
-    }
-
-    if hasFourToStraight(cards) {
-      features.insert(.fourToStraight)
-    }
-
-    if hasThreeToFlush(cards) {
-      features.insert(.threeToFlush)
-    }
-
-    if hasFourToFlush(cards) {
-      features.insert(.fourToFlush)
-    }
-
-    if hasOnePair(cards) {
-      features.insert(.onePair)
-    }
-
-    if hasTwoPair(cards) {
-      features.insert(.twoPair)
-    }
-
-    return features
-  }
-
-  // MARK: Possible Straight
-
-  private func hasThreeToOpenEndedStraight(_ cards: [Card]) -> Bool {
-    // Dedupe and sort the ranks.
-    let sortedUniqueRanks = sortedUniqueRanks(cards)
-
-    // We need at least three unique ranks to have three to an open-ended straight.
-    guard sortedUniqueRanks.count >= 3 else { return false }
-
-    // Helper function to check for straights.
-    func isSequential(_ ranks: [Rank]) -> Bool {
-      for i in 0..<ranks.count - 1 {
-        if ranks[i].rawValue != ranks[i + 1].rawValue - 1 {
-          return false
-        }
-      }
-      return true
-    }
-
-    for i in 0..<sortedUniqueRanks.count - 2 {
-      let slice = Array(sortedUniqueRanks[i...i + 2])
-      if isSequential(slice) {
-        let isLowOpenEnded = sortedUniqueRanks[i] >= .two
-        let isHighOpenEnded = sortedUniqueRanks[i + 2] <= .king
-        if isLowOpenEnded && isHighOpenEnded {
-          return true
-        }
-      }
-    }
-
-    return false
-  }
-
-  private func hasFourToStraight(_ cards: [Card]) -> Bool {
-    // Dedupe and sort the ranks.
-    let sortedUniqueRanks = Set(sortedUniqueRanks(cards))
-
-    // We need at least four unique ranks to have four to a straight.
-    guard sortedUniqueRanks.count >= 3 else { return false }
-
-    let straights: [Set<Rank>] = [
-      [Rank.ace, .two, .three, .four, .five],
-      [Rank.two, .three, .four, .five, .six],
-      [Rank.three, .four, .five, .six, .seven],
-      [Rank.four, .five, .six, .seven, .eight],
-      [Rank.five, .six, .seven, .eight, .nine],
-      [Rank.six, .seven, .eight, .nine, .ten],
-      [Rank.seven, .eight, .nine, .ten, .jack],
-      [Rank.eight, .nine, .ten, .jack, .queen],
-      [Rank.nine, .ten, .jack, .queen, .king],
-      [Rank.ten, .jack, .queen, .king, .ace],
-    ]
-
+    // First, check for a complete straight.
     for straight in straights {
-      let missingRanks = straight.symmetricDifference(sortedUniqueRanks)
-      if missingRanks.count == 1 {
+      if straight.isSubset(of: uniqueRanks) {
+        return false  // Board contains a complete straight.
+      }
+    }
+
+    // Then check for three to a straight.
+    for straight in straights {
+      let intersection = uniqueRanks.intersection(straight)
+      if intersection.count >= 3 {
         return true
       }
     }
@@ -105,33 +55,33 @@ struct BoardEvaluator {
     return false
   }
 
-  private func sortedUniqueRanks(_ cards: [Card]) -> [Rank] {
-    let ranks = cards.map(\.rank)
-    let uniqueRanks = Set(ranks)
-    return uniqueRanks.sorted(by: <)
+  @inlinable
+  public func hasThreeToOpenEndedStraight(cards: [Card]) -> Bool {
+    return false
   }
 
-  // MARK: Possible Flush
-
-  private func hasThreeToFlush(_ cards: [Card]) -> Bool {
-    let suitHistogram = cards.suitHistogram()
-    return suitHistogram.values.contains(where: { $0 == 3 })
+  @inlinable
+  public func hasFourToStraight(_ cards: [Card]) -> Bool {
+    return false
   }
 
-  private func hasFourToFlush(_ cards: [Card]) -> Bool {
-    let suitHistogram = cards.suitHistogram()
-    return suitHistogram.values.contains(where: { $0 == 4 })
+  @inlinable
+  public func hasThreeToFlush(cards: [Card]) -> Bool {
+    return false
   }
 
-  // MARK: Pair
-
-  private func hasOnePair(_ cards: [Card]) -> Bool {
-    let rankHistogram = cards.rankHistogram()
-    return rankHistogram.values.filter { $0 == 2 }.count == 1
+  @inlinable
+  public func hasFourToFlush(cards: [Card]) -> Bool {
+    return false
   }
 
-  private func hasTwoPair(_ cards: [Card]) -> Bool {
-    let rankHistogram = cards.rankHistogram()
-    return rankHistogram.values.filter { $0 == 2 }.count == 2
+  @inlinable
+  public func hasOnePair(cards: [Card]) -> Bool {
+    return false
+  }
+
+  @inlinable
+  public func hasTwoPair(cards: [Card]) -> Bool {
+    return false
   }
 }

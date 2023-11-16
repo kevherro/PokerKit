@@ -25,6 +25,10 @@ extension Array where Element == Card {
     return histogram
   }
 
+  public func ranks() -> [Rank] {
+    return self.map(\.rank)
+  }
+
   public func suitHistogram() -> [Suit: Int] {
     var histogram = [Suit: Int]()
     for card in self {
