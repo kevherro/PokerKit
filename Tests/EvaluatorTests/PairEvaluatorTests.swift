@@ -535,4 +535,90 @@ final class PairEvaluatorTests: PokerKitTestCase {
     let hasSet = sut.hasSet(holeCards: holeCards, communityCards: communityCards)
     expectFalse(hasSet)
   }
+
+  // MARK: Full House
+
+  func testHasFullHouse_tripsFromHole() {
+    let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.king, .clubs),
+      card(.king, .hearts),
+    ]
+    let hasFullHouse = sut.hasFullHouse(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasFullHouse)
+  }
+
+  func testHasFullHouse_pairFromHole() {
+    let holeCards = [card(.ace, .hearts), card(.five, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .spades),
+      card(.king, .clubs),
+      card(.king, .hearts),
+    ]
+    let hasFullHouse = sut.hasFullHouse(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasFullHouse)
+  }
+
+  func testHasFullHouse_inCommunityCards() {
+    let holeCards = [card(.five, .hearts), card(.three, .diamonds)]
+    let communityCards = [
+      card(.ace, .clubs),
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+      card(.king, .clubs),
+      card(.king, .hearts),
+    ]
+    let hasFullHouse = sut.hasFullHouse(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasFullHouse)
+  }
+
+  func testNoFullHouse() {
+    let holeCards = [card(.five, .hearts), card(.three, .diamonds)]
+    let communityCards = [
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+      card(.king, .clubs),
+      card(.king, .hearts),
+    ]
+    let hasFullHouse = sut.hasFullHouse(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasFullHouse)
+  }
+
+  func testNoFullHouse_tooFewCards() {
+    let holeCards = [card(.five, .hearts), card(.three, .diamonds)]
+    let communityCards = [
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+    ]
+    let hasFullHouse = sut.hasFullHouse(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasFullHouse)
+  }
+
+  func testNoFullHouse_tooManyCards() {
+    let holeCards = [card(.five, .hearts), card(.three, .diamonds)]
+    let communityCards = [
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+      card(.ace, .clubs),
+      card(.ace, .spades),
+      card(.king, .hearts),
+      card(.king, .diamonds),
+    ]
+    let hasFullHouse = sut.hasFullHouse(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasFullHouse)
+  }
+
+  func testNoFullHouse_invalidDupes() {
+    let holeCards = [card(.five, .hearts), card(.three, .diamonds)]
+    let communityCards = [
+      card(.ace, .hearts),
+      card(.ace, .hearts),
+      card(.ace, .clubs),
+      card(.ace, .spades),
+    ]
+    let hasFullHouse = sut.hasFullHouse(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasFullHouse)
+  }
 }

@@ -120,6 +120,28 @@ public struct PairEvaluator {
     return communityCards.map(\.rank).filter { $0 == holeCards[0].rank }.count == 1
   }
 
+  /// Checks for three cards of the same rank `rank1`,
+  /// and two cards of the same rank `rank2`, where `rank1 != rank2`,
+  /// using zero, one, or two hole cards.
+  ///
+  ///
+  /// - Parameters:
+  ///   - holeCards: An array of type `Card` representing the player's hole cards.
+  ///   - communityCards: An array of type `Card` representing the cards on the board.
+  ///
+  /// - Returns: True if the player has a full house, false otherwise.
+  public func hasFullHouse(
+    holeCards: [Card],
+    communityCards: [Card]
+  ) -> Bool {
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+    let histogram = (holeCards + communityCards).rankHistogram()
+    guard let tripsRank = histogram.first(where: { $0.value == 3 })?.key else {
+      return false
+    }
+    return histogram.contains(where: { $0.key != tripsRank && $0.value >= 2 })
+  }
+
   // MARK: -
 
   private func check(
