@@ -12,3 +12,8 @@ docc:
 			generate-documentation \
 			--target Evaluators \
 			--output-path ./Documentation
+
+.PHONY: docc-preview
+docc-preview:
+		swift package --disable-sandbox preview-documentation \
+			--target Evaluators

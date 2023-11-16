@@ -12,14 +12,13 @@ import Types
 ///
 /// Each method independently checks for a particular board feature,
 /// without considering its overall texture.
-struct BoardEvaluator {
+public struct BoardEvaluator {
 
   /// Checks if any three cards on the board can potentially form a straight.
   ///
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
   /// - Returns: True if there is a potential straight using three cards, false otherwise.
-  @inlinable
   public func hasThreeToStraight(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
     let ranks = cards.ranks()
@@ -31,7 +30,6 @@ struct BoardEvaluator {
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
   /// - Returns: True if there is a potential straight using four cards, false otherwise.
-  @inlinable
   public func hasFourToStraight(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
     let ranks = cards.ranks()
@@ -43,7 +41,6 @@ struct BoardEvaluator {
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
   /// - Returns: True if there is a potential flush using three cards, false otherwise.
-  @inlinable
   public func hasThreeToFlush(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
     return isNToFlush(3, cards: cards)
@@ -54,7 +51,6 @@ struct BoardEvaluator {
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
   /// - Returns: True if there is a potential flush using four cards, false otherwise.
-  @inlinable
   public func hasFourToFlush(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
     return isNToFlush(4, cards: cards)
@@ -65,7 +61,6 @@ struct BoardEvaluator {
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
   /// - Returns: True if the board has exactly one pair, false otherwise.
-  @inlinable
   public func hasOnePair(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
     return nPairs(cards: cards) == 1
@@ -76,7 +71,6 @@ struct BoardEvaluator {
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
   /// - Returns: True if the board has exactly two pairs, false otherwise.
-  @inlinable
   public func hasTwoPair(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
     return nPairs(cards: cards) == 2
