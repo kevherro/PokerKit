@@ -27,7 +27,25 @@ public struct FlushEvaluator {
   ) -> Bool {
     guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
     let histogram = (holeCards + communityCards).suitHistogram()
-    return histogram.values.contains(5)
+    return histogram.values.contains(where: { $0 >= 5 })
+  }
+
+  /// A hand of five cards of the same suit, using one or both hole cards,
+  /// where one of the hole cards is the Ace of the flush suit.
+  ///
+  /// - Parameters:
+  ///   - holeCards: The player's hole cards.
+  ///   - communityCards: The community cards.
+  ///
+  /// - Returns: True if the player has the nut flush, false otherwise.
+  public func hasNutFlush(
+    holeCards: [Card],
+    communityCards: [Card]
+  ) -> Bool {
+    guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
+    let histogram = (holeCards + communityCards).suitHistogram()
+    guard let flushSuit = histogram.first(where: { $0.value >= 5 })?.key else { return false }
+    return holeCards.contains(where: { $0.rank == .ace && $0.suit == flushSuit })
   }
 
   // MARK: -
