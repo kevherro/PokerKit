@@ -6,4 +6,11 @@
 //
 //===----------------------------------------------------------------------===//
 
-struct TightAggressiveStrategy: StrategyProtocol {}
+import Types
+
+protocol StreetEvaluatorProtocol {
+  func evaluate(
+    holeCards: [Card],
+    communityCards: [Card]
+  ) -> Bool
+}

@@ -8,19 +8,15 @@
 
 import Types
 
-protocol StrategyProtocol {
-  func isMinGoodHand(
-    for street: Street,
-    holeCards: [Card],
-    communityCards: [Card]
-  ) -> Bool
-}
-
-struct StrategyFactory {
-  func makeStrategy(_ strategy: Strategy) -> StrategyProtocol {
-    switch strategy {
-    default:
-      fatalError()
+struct StreetEvaluatorFactory {
+  func makeStreetEvaluator(street: Street) -> StreetEvaluatorProtocol {
+    switch street {
+    case .flop:
+      return FlopEvaluator()
+    case .turn:
+      return TurnEvaluator()
+    case .river:
+      return RiverEvaluator()
     }
   }
 }
