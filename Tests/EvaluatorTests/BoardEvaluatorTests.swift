@@ -465,4 +465,82 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     let hasOnePair = sut.hasOnePair(cards: cards)
     expectFalse(hasOnePair)
   }
+
+  // MARK: Two Pair
+
+  func test_two_pair() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .diamonds),
+      card(.five, .hearts),
+      card(.five, .diamonds),
+    ]
+    let hasTwoPair = sut.hasTwoPair(cards: cards)
+    expectTrue(hasTwoPair)
+  }
+
+  func test_fewer_than_two_pair() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .diamonds),
+      card(.five, .hearts),
+    ]
+    let hasTwoPair = sut.hasTwoPair(cards: cards)
+    expectFalse(hasTwoPair)
+  }
+
+  func test_two_pair_too_few_cards() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .diamonds),
+    ]
+    let hasTwoPair = sut.hasTwoPair(cards: cards)
+    expectFalse(hasTwoPair)
+  }
+
+  func test_two_pair_too_many_cards() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .diamonds),
+      card(.six, .hearts),
+      card(.seven, .hearts),
+      card(.eight, .hearts),
+      card(.nine, .hearts),
+    ]
+    let hasTwoPair = sut.hasTwoPair(cards: cards)
+    expectFalse(hasTwoPair)
+  }
+
+  func test_two_pair_invalid_dupes() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .hearts),
+      card(.five, .hearts),
+    ]
+    let hasTwoPair = sut.hasTwoPair(cards: cards)
+    expectFalse(hasTwoPair)
+  }
+
+  func test_two_pair_three_of_a_kind() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .diamonds),
+      card(.four, .clubs),
+      card(.five, .hearts),
+    ]
+    let hasTwoPair = sut.hasTwoPair(cards: cards)
+    expectFalse(hasTwoPair)
+  }
+
+  func test_two_pair_four_of_a_kind() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .diamonds),
+      card(.four, .clubs),
+      card(.four, .spades),
+      card(.five, .hearts),
+    ]
+    let hasTwoPair = sut.hasTwoPair(cards: cards)
+    expectFalse(hasTwoPair)
+  }
 }

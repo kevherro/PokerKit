@@ -9,9 +9,10 @@
 import Types
 
 /// `BoardEvaluator` provides methods to evaluate specific board features.
+///
 /// Each method independently checks for a particular board feature,
 /// without considering the overall texture of the board.
-/// Therefore, it's possible for multiple methods to return `true` for the same board.
+/// Meaning, it's possible that multiple methods return `true` for the same board.
 struct BoardEvaluator {
   private let possibleStraights: [Set<Rank>] = [
     [Rank.ace, .two, .three, .four, .five],
@@ -30,7 +31,7 @@ struct BoardEvaluator {
   ///
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
-  /// - Returns: True if there is a potential straight, false otherwise.
+  /// - Returns: True if there is a potential straight using three cards, false otherwise.
   @inlinable
   public func hasThreeToStraight(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
@@ -51,7 +52,7 @@ struct BoardEvaluator {
   ///
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
-  /// - Returns: True if there is a potential straight, false otherwise.
+  /// - Returns: True if there is a potential straight using four cards, false otherwise.
   @inlinable
   public func hasFourToStraight(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
@@ -67,7 +68,7 @@ struct BoardEvaluator {
   ///
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
-  /// - Returns: True if there is a potential flush, false otherwise.
+  /// - Returns: True if there is a potential flush using three cards, false otherwise.
   @inlinable
   public func hasThreeToFlush(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
@@ -78,28 +79,33 @@ struct BoardEvaluator {
   ///
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
-  /// - Returns: True if there is a potential flush, false otherwise.
+  /// - Returns: True if there is a potential flush using four cards, false otherwise.
   @inlinable
   public func hasFourToFlush(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
     return isNToFlush(4, cards: cards)
   }
 
-  /// Checks if the board has one pair.
-  /// Two cards form a pair if they have the same rank.
+  /// Checks if the board has exactly one pair.
   ///
   /// - Parameter cards: An array of type `Card` that represents the cards on the board.
   ///
-  /// - Returns: True if the board has one pair, false otherwise.
+  /// - Returns: True if the board has exactly one pair, false otherwise.
   @inlinable
   public func hasOnePair(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
     return nPairs(cards: cards) == 1
   }
 
+  /// Checks if the board has exactly two pairs.
+  ///
+  /// - Parameter cards: An array of type `Card` that represents the cards on the board.
+  ///
+  /// - Returns: True if the board has exactly two pairs, false otherwise.
   @inlinable
   public func hasTwoPair(cards: [Card]) -> Bool {
-    return false
+    guard check(cards) else { return false }
+    return nPairs(cards: cards) == 2
   }
 
   // MARK: -
