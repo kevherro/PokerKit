@@ -128,6 +128,8 @@ public struct PairEvaluator {
   ) -> Bool {
     return holeCards.count == 2
       && communityCards.count >= 3 && communityCards.count <= 5
+      && Set(holeCards).count == holeCards.count
+      && Set(communityCards).count == communityCards.count
   }
 
   private func highestRank(in cards: [Card]) -> Rank? {

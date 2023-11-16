@@ -60,9 +60,12 @@ extension CustomTarget {
 
 let targets: [CustomTarget] = [
   .target(
-    kind: .hidden,
+    kind: .exported,
     name: "Evaluators",
-    dependencies: ["Types"]
+    dependencies: [
+      "Types",
+      .product(name: "Algorithms", package: "swift-algorithms"),
+    ]
   ),
   .target(
     kind: .exported,
@@ -105,7 +108,8 @@ let _platforms: [SupportedPlatform] = [
 ]
 
 let _dependencies: [Package.Dependency] = [
-  .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0")
+  .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0"),
+  .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
 ]
 
 let package = Package(
