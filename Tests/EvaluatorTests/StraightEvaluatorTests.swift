@@ -39,6 +39,19 @@ final class StraightEvaluatorTests: PokerKitTestCase {
     expectTrue(hasStraight)
   }
 
+  func testStraight_withTrips() {
+    let holeCards = [card(.three, .hearts), card(.seven, .hearts)]
+    let communityCards = [
+      card(.four, .hearts),
+      card(.five, .hearts),
+      card(.five, .diamonds),
+      card(.five, .clubs),
+      card(.six, .hearts),
+    ]
+    let hasStraight = sut.hasStraight(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasStraight)
+  }
+
   func testNoStraight() {
     let holeCards = [card(.jack, .hearts), card(.ten, .hearts)]
     let communityCards = [
