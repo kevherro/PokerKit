@@ -37,15 +37,9 @@ struct BoardEvaluator {
     guard check(cards) else { return false }
 
     let uniqueRanks = Set(cards.ranks())
-    let isCompleteStraight = isNToStraight(5, ranks: uniqueRanks)
-    let isThreeToStraight = isNToStraight(3, ranks: uniqueRanks)
 
-    return !isCompleteStraight && isThreeToStraight
-  }
-
-  @inlinable
-  public func hasThreeToOpenEndedStraight(cards: [Card]) -> Bool {
-    return false
+    return !isNToStraight(5, ranks: uniqueRanks)
+      && isNToStraight(3, ranks: uniqueRanks)
   }
 
   /// Checks if any four cards on the board can potentially form a straight.
@@ -58,10 +52,9 @@ struct BoardEvaluator {
     guard check(cards) else { return false }
 
     let uniqueRanks = Set(cards.ranks())
-    let isCompleteStraight = isNToStraight(5, ranks: uniqueRanks)
-    let isFourToStraight = isNToStraight(4, ranks: uniqueRanks)
 
-    return !isCompleteStraight && isFourToStraight
+    return !isNToStraight(5, ranks: uniqueRanks)
+      && isNToStraight(4, ranks: uniqueRanks)
   }
 
   /// Checks if any three cards on the board can potentially form a flush.
