@@ -61,9 +61,19 @@ struct BoardEvaluator {
       && isNToStraight(4, ranks: uniqueRanks)
   }
 
+  /// Checks if any three cards on the board can potentially form a flush.
+  ///
+  /// - Parameter cards: An array of type `Card` that represents the cards on the board.
+  ///
+  /// - Returns: True if there is a potential flush, false otherwise.
   @inlinable
   public func hasThreeToFlush(cards: [Card]) -> Bool {
-    return false
+    guard cards.count >= 3, cards.count <= 5 else { return false }
+
+    let uniqueCards = Set(cards)
+    let suitHistogram = Array(uniqueCards).suitHistogram()
+
+    return suitHistogram.values.contains(3)
   }
 
   @inlinable
