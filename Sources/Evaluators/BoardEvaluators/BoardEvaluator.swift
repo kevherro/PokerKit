@@ -11,8 +11,7 @@ import Types
 /// `BoardEvaluator` provides methods to evaluate specific board features.
 ///
 /// Each method independently checks for a particular board feature,
-/// without considering the overall texture of the board.
-/// Meaning, it's possible that multiple methods return `true` for the same board.
+/// without considering its overall texture.
 struct BoardEvaluator {
   private let possibleStraights: [Set<Rank>] = [
     [Rank.ace, .two, .three, .four, .five],
