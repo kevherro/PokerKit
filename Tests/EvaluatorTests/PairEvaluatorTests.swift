@@ -15,7 +15,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
 
   // MARK: Top Pair
 
-  func test_top_pair() {
+  func testTopPair() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -26,7 +26,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPair)
   }
 
-  func test_top_pair_quads() {
+  func testTopPair_quads() {
     let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
     let communityCards = [
       card(.ace, .clubs),
@@ -37,7 +37,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPair)
   }
 
-  func test_top_pair_set() {
+  func testTopPair_set() {
     let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
     let communityCards = [
       card(.ace, .clubs),
@@ -48,7 +48,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPair)
   }
 
-  func test_top_pair_trips() {
+  func testTopPair_trips() {
     let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.ace, .clubs),
@@ -59,12 +59,12 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPair)
   }
 
-  func test_no_top_pair_too_few_cards() {
+  func testNoTopPair_tooFewCards() {
     let hasTopPair = sut.hasTopPair(holeCards: [], communityCards: [])
     expectFalse(hasTopPair)
   }
 
-  func test_no_top_pair_no_pair() {
+  func testNoTopPair_noPair() {
     let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -75,7 +75,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTopPair)
   }
 
-  func test_no_top_pair_too_low() {
+  func testNoTopPair_tooLow() {
     let holeCards = [card(.king, .diamonds), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -86,7 +86,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTopPair)
   }
 
-  func test_no_top_pair_paired_board() {
+  func testNoTopPair_pairedBoard() {
     let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -97,7 +97,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTopPair)
   }
 
-  func test_no_top_pair_pocket_pair() {
+  func testNoTopPair_pocketPair() {
     let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
     let communityCards = [
       card(.king, .diamonds),
@@ -110,7 +110,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
 
   // MARK: Top Pair Top Kicker
 
-  func test_top_pair_top_kicker_ace_kicker() {
+  func testTopPairTopKicker_aceKicker() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.king, .diamonds),
@@ -121,7 +121,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPairTopKicker)
   }
 
-  func test_top_pair_top_kicker_king_kicker() {
+  func testTopPairTopKicker_kingKicker() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -132,7 +132,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPairTopKicker)
   }
 
-  func test_top_pair_top_kicker_queen_kicker() {
+  func testTopPairTopKicker_queenKicker() {
     let holeCards = [card(.ace, .hearts), card(.queen, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -143,7 +143,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPairTopKicker)
   }
 
-  func test_top_pair_top_kicker_quads() {
+  func testTopPairTopKicker_quads() {
     let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.ace, .clubs),
@@ -154,7 +154,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPairTopKicker)
   }
 
-  func test_top_pair_top_kicker_trips() {
+  func testTopPairTopKicker_trips() {
     let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.ace, .clubs),
@@ -165,7 +165,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTopPairTopKicker)
   }
 
-  func test_no_top_pair_top_kicker_set() {
+  func testNoTopPairTopKicker_set() {
     let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
     let communityCards = [
       card(.ace, .clubs),
@@ -176,12 +176,12 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTopPairTopKicker)
   }
 
-  func test_no_top_pair_top_kicker_too_few_cards() {
+  func testNoTopPairTopKicker_tooFewCards() {
     let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: [], communityCards: [])
     expectFalse(hasTopPairTopKicker)
   }
 
-  func test_no_top_pair_top_kicker_no_pair() {
+  func testNoTopPairTopKicker_noPair() {
     let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -192,7 +192,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTopPairTopKicker)
   }
 
-  func test_no_top_pair_top_kicker_too_low() {
+  func testNoTopPairTopKicker_tooLow() {
     let holeCards = [card(.king, .diamonds), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -203,7 +203,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTopPairTopKicker)
   }
 
-  func test_no_top_pair_top_kicker_paired_board() {
+  func testNoTopPairTopKicker_pairedBoard() {
     let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -214,7 +214,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTopPairTopKicker)
   }
 
-  func test_no_top_pair_top_kicker_pocket_pair() {
+  func testNoTopPairTopKicker_pocketPair() {
     let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
     let communityCards = [
       card(.king, .diamonds),
@@ -227,7 +227,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
 
   // MARK: Second Pair
 
-  func test_second_pair() {
+  func testSecondPair() {
     let holeCards = [card(.king, .hearts), card(.five, .diamonds)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -238,7 +238,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasSecondPair)
   }
 
-  func test_second_pair_quads() {
+  func testSecondPair_quads() {
     let holeCards = [card(.king, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.ace, .clubs),
@@ -249,7 +249,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasSecondPair)
   }
 
-  func test_second_pair_set() {
+  func testSecondPair_set() {
     let holeCards = [card(.king, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.ace, .clubs),
@@ -260,7 +260,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasSecondPair)
   }
 
-  func test_second_pair_trips() {
+  func testSecondPair_trips() {
     let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.king, .clubs),
@@ -271,12 +271,12 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasSecondPair)
   }
 
-  func test_no_second_pair_too_few_cards() {
+  func testNoSecondPair_tooFewCards() {
     let hasSecondPair = sut.hasSecondPair(holeCards: [], communityCards: [])
     expectFalse(hasSecondPair)
   }
 
-  func test_no_second_pair_no_pair() {
+  func testNoSecondPair_noPair() {
     let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -287,7 +287,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasSecondPair)
   }
 
-  func test_no_second_pair_too_low() {
+  func testNoSecondPair_tooLow() {
     let holeCards = [card(.ten, .diamonds), card(.two, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -298,7 +298,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasSecondPair)
   }
 
-  func test_no_second_pair_paired_board() {
+  func testNoSecondPair_pairedBoard() {
     let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -309,7 +309,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasSecondPair)
   }
 
-  func test_no_second_pair_pocket_pair() {
+  func testNoSecondPair_pocketPair() {
     let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
     let communityCards = [
       card(.king, .diamonds),
@@ -322,7 +322,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
 
   // MARK: Overpair
 
-  func test_overpair() {
+  func testOverpair() {
     let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
     let communityCards = [
       card(.king, .hearts),
@@ -333,12 +333,12 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasOverpair)
   }
 
-  func test_no_overpairpair_too_few_cards() {
+  func testNoOverpairpair_tooFewCards() {
     let hasOverpair = sut.hasOverpair(holeCards: [], communityCards: [])
     expectFalse(hasOverpair)
   }
 
-  func test_no_overpair_no_pair() {
+  func testNoOverpair_noPair() {
     let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -349,7 +349,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasOverpair)
   }
 
-  func test_no_overpair_too_low() {
+  func testNoOverpair_tooLow() {
     let holeCards = [card(.two, .diamonds), card(.two, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -360,7 +360,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasOverpair)
   }
 
-  func test_no_overpair_paired_board() {
+  func testNoOverpair_pairedBoard() {
     let holeCards = [card(.king, .hearts), card(.ten, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -373,7 +373,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
 
   // MARK: Set
 
-  func test_set() {
+  func testSet() {
     let holeCards = [card(.ace, .hearts), card(.ace, .diamonds)]
     let communityCards = [
       card(.ace, .hearts),
@@ -384,12 +384,12 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectTrue(hasSet)
   }
 
-  func test_no_set_too_few_cards() {
+  func testNoSet_tooFewCards() {
     let hasSet = sut.hasSet(holeCards: [], communityCards: [])
     expectFalse(hasSet)
   }
 
-  func test_no_set_no_pair() {
+  func testNoSet_noPair() {
     let holeCards = [card(.ace, .diamonds), card(.two, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),
@@ -400,7 +400,7 @@ final class PairEvaluatorTests: PokerKitTestCase {
     expectFalse(hasSet)
   }
 
-  func test_no_set_quads() {
+  func testNoSet_quads() {
     let holeCards = [card(.ace, .diamonds), card(.ace, .hearts)]
     let communityCards = [
       card(.ace, .diamonds),

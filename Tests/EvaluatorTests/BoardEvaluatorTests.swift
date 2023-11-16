@@ -15,7 +15,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
 
   // MARK: Three To A Straight
 
-  func test_has_three_to_straight_middle_sequential() {
+  func testHasThreeToStraight_middleSequential() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -25,7 +25,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
-  func test_has_three_to_straight_middle_one_gap() {
+  func testHasThreeToStraight_middleOneGap() {
     let cards = [
       card(.four, .hearts),
       card(.six, .hearts),
@@ -35,7 +35,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
-  func test_has_three_to_straight_ace_low_sequential() {
+  func testHasThreeToStraight_aceLowSequential() {
     let cards = [
       card(.ace, .hearts),
       card(.two, .hearts),
@@ -45,7 +45,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
-  func test_has_three_to_straight_ace_low_one_gap() {
+  func testHasThreeToStraight_aceLowOneGap() {
     let cards = [
       card(.ace, .hearts),
       card(.three, .hearts),
@@ -55,7 +55,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
-  func test_has_three_to_straight_ace_high_sequential() {
+  func testHasThreeToStraight_aceHighSequential() {
     let cards = [
       card(.ace, .hearts),
       card(.king, .hearts),
@@ -65,7 +65,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
-  func test_has_three_to_straight_ace_high_one_gap() {
+  func testHasThreeToStraight_aceHighOneGap() {
     let cards = [
       card(.ace, .hearts),
       card(.queen, .hearts),
@@ -75,7 +75,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
-  func test_no_three_to_straight_board_has_straight() {
+  func testNoThreeToStraight_boardHasStraight() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -87,7 +87,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasThreeToStraight)
   }
 
-  func test_no_three_to_straight_no_potential_straight() {
+  func testNoThreeToStraight_noPotentialStraight() {
     let cards = [
       card(.four, .hearts),
       card(.eight, .hearts),
@@ -97,7 +97,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasThreeToStraight)
   }
 
-  func test_no_three_to_straight_duplicates() {
+  func testNoThreeToStraight_duplicates() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -107,7 +107,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasThreeToStraight)
   }
 
-  func test_three_to_straight_duplicates() {
+  func testThreeToStraight_duplicates() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -119,7 +119,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
-  func test_no_three_to_straight_too_few_cards() {
+  func testNoThreeToStraight_tooFewCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .diamonds),
@@ -128,7 +128,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasThreeToStraight)
   }
 
-  func test_no_three_to_straight_too_many_cards() {
+  func testNoThreeToStraight_tooManyCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .diamonds),
@@ -143,7 +143,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
 
   // MARK: Four To A Straight
 
-  func test_has_four_to_straight_middle_sequential() {
+  func testHasFourToStraight_middleSequential() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -154,7 +154,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToStraight)
   }
 
-  func test_has_four_to_straight_middle_one_gap() {
+  func testHasFourToStraight_middleOneGap() {
     let cards = [
       card(.three, .hearts),
       card(.four, .hearts),
@@ -165,7 +165,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToStraight)
   }
 
-  func test_has_four_to_straight_ace_low_sequential() {
+  func testHasFourToStraight_aceLowSequential() {
     let cards = [
       card(.ace, .hearts),
       card(.two, .hearts),
@@ -176,7 +176,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToStraight)
   }
 
-  func test_has_four_to_straight_ace_low_one_gap() {
+  func testHasFourToStraight_aceLowOneGap() {
     let cards = [
       card(.ace, .hearts),
       card(.three, .hearts),
@@ -187,7 +187,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToStraight)
   }
 
-  func test_has_four_to_straight_ace_high_sequential() {
+  func testHasFourToStraight_aceHighSequential() {
     let cards = [
       card(.ace, .hearts),
       card(.king, .hearts),
@@ -198,7 +198,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToStraight)
   }
 
-  func test_has_four_to_straight_ace_high_one_gap() {
+  func testHasFourToStraight_aceHighOneGap() {
     let cards = [
       card(.ace, .hearts),
       card(.queen, .hearts),
@@ -209,7 +209,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToStraight)
   }
 
-  func test_no_four_to_straight_board_has_straight() {
+  func testNoFourToStraight_boardHasStraight() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -221,7 +221,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFourToStraight)
   }
 
-  func test_no_four_to_straight_no_potential_straight() {
+  func testNoFourToStraight_noPotentialStraight() {
     let cards = [
       card(.four, .hearts),
       card(.eight, .hearts),
@@ -232,7 +232,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFourToStraight)
   }
 
-  func test_no_four_to_straight_duplicates() {
+  func testNoFourToStraight_duplicates() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -243,7 +243,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFourToStraight)
   }
 
-  func test_four_to_straight_duplicates() {
+  func testFourToStraight_duplicates() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -255,7 +255,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToStraight)
   }
 
-  func test_no_four_to_straight_too_few_cards() {
+  func testNoFourToStraight_tooFewCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .diamonds),
@@ -264,7 +264,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFourToStraight)
   }
 
-  func test_no_four_to_straight_too_many_cards() {
+  func testNoFourToStraight_tooManyCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .diamonds),
@@ -279,7 +279,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
 
   // MARK: Three To Flush
 
-  func test_three_to_flush() {
+  func testThreeToFlush() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -289,7 +289,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToFlush)
   }
 
-  func test_no_three_to_flush_invalid_dupes() {
+  func testNoThreeToFlush_invalidDupes() {
     let cards = [
       card(.four, .hearts),
       card(.four, .hearts),
@@ -299,7 +299,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasThreeToFlush)
   }
 
-  func test_no_three_to_flush_too_few_flush_cards() {
+  func testNoThreeToFlush_tooFewFlushCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -309,7 +309,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasThreeToFlush)
   }
 
-  func test_no_three_to_flush_too_few_cards() {
+  func testNoThreeToFlush_tooFewCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -318,7 +318,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasThreeToFlush)
   }
 
-  func test_no_three_to_flush_too_many_cards() {
+  func testNoThreeToFlush_tooManyCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -333,7 +333,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
 
   // MARK: Four To Flush
 
-  func test_four_to_flush() {
+  func testFourToFlush() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -344,7 +344,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToFlush)
   }
 
-  func test_no_four_to_flush_invalid_dupes() {
+  func testNoFourToFlush_invalidDupes() {
     let cards = [
       card(.four, .hearts),
       card(.four, .hearts),
@@ -355,7 +355,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFourToFlush)
   }
 
-  func test_no_four_to_flush_too_few_flush_cards() {
+  func testNoFourToFlush_tooFewFlushCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -366,7 +366,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFourToFlush)
   }
 
-  func test_no_four_to_flush_too_few_cards() {
+  func testNoFourToFlush_tooFewCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -375,7 +375,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFourToFlush)
   }
 
-  func test_no_four_to_flush_too_many_cards() {
+  func testNoFourToFlush_tooManyCards() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -390,7 +390,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
 
   // MARK: One Pair
 
-  func test_one_pair() {
+  func testOnePair() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -400,7 +400,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasOnePair)
   }
 
-  func test_more_than_one_pair() {
+  func testNoPair_tooManyPairs() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -411,7 +411,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasOnePair)
   }
 
-  func test_one_pair_too_few_cards() {
+  func testOnePair_tooFewCards() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -420,7 +420,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasOnePair)
   }
 
-  func test_one_pair_too_many_cards() {
+  func testOnePair_tooManyCards() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -433,7 +433,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasOnePair)
   }
 
-  func test_one_pair_invalid_dupes() {
+  func testOnePair_invalidDupes() {
     let cards = [
       card(.four, .hearts),
       card(.four, .hearts),
@@ -443,7 +443,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasOnePair)
   }
 
-  func test_one_pair_three_of_a_kind() {
+  func testOnePair_threeOfAKind() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -454,7 +454,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasOnePair)
   }
 
-  func test_one_pair_four_of_a_kind() {
+  func testOnePair_fourOfAKind() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -468,7 +468,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
 
   // MARK: Two Pair
 
-  func test_two_pair() {
+  func testTwoPair() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -479,7 +479,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasTwoPair)
   }
 
-  func test_fewer_than_two_pair() {
+  func testNoTwoPair_tooFewPairs() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -489,7 +489,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTwoPair)
   }
 
-  func test_two_pair_too_few_cards() {
+  func testTwoPair_tooFewCards() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -498,7 +498,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTwoPair)
   }
 
-  func test_two_pair_too_many_cards() {
+  func testTwoPair_tooManyCards() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -511,7 +511,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTwoPair)
   }
 
-  func test_two_pair_invalid_dupes() {
+  func testTwoPair_invalidDupes() {
     let cards = [
       card(.four, .hearts),
       card(.four, .hearts),
@@ -521,7 +521,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTwoPair)
   }
 
-  func test_two_pair_three_of_a_kind() {
+  func testTwoPair_threeOfAKind() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -532,7 +532,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectFalse(hasTwoPair)
   }
 
-  func test_two_pair_four_of_a_kind() {
+  func testTwoPair_fourOfAKind() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),

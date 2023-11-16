@@ -15,7 +15,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
 
   // MARK: Flush
 
-  func test_has_flush() {
+  func testHasFlush() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.queen, .hearts),
@@ -26,7 +26,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFlush)
   }
 
-  func test_has_flush_all_cards() {
+  func testHasFlush_allCards() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.queen, .hearts),
@@ -39,7 +39,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFlush)
   }
 
-  func test_has_flush_extra_non_flush_cards() {
+  func testHasFlush_extraNonFlushCards() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.queen, .hearts),
@@ -51,7 +51,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFlush)
   }
 
-  func test_has_flush_in_community_cards() {
+  func testHasFlush_inCommunityCards() {
     let holeCards = [card(.ace, .diamonds), card(.king, .diamonds)]
     let communityCards = [
       card(.queen, .hearts),
@@ -64,7 +64,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFlush)
   }
 
-  func test_no_flush() {
+  func testNoFlush() {
     let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.queen, .hearts),
@@ -76,12 +76,12 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectFalse(hasFlush)
   }
 
-  func test_no_flush_too_few_cards() {
+  func testNoFlush_tooFewCards() {
     let hasFlush = sut.hasFlush(holeCards: [], communityCards: [])
     expectFalse(hasFlush)
   }
 
-  func test_no_flush_too_many_cards() {
+  func testNoFlush_tooManyCards() {
     let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.queen, .hearts),
@@ -97,7 +97,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
 
   // MARK: Nut Flush
 
-  func test_has_nut_flush() {
+  func testHasNutFlush() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.queen, .hearts),
@@ -108,7 +108,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectTrue(hasNutFlush)
   }
 
-  func test_has_nut_flush_all_cards() {
+  func testHasNutFlush_allCards() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.queen, .hearts),
@@ -121,7 +121,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectTrue(hasNutFlush)
   }
 
-  func test_has_nut_flush_extra_non_flush_cards() {
+  func testHasNutFlush_extraNonFlushCards() {
     let holeCards = [card(.ace, .hearts), card(.king, .hearts)]
     let communityCards = [
       card(.queen, .hearts),
@@ -133,7 +133,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectTrue(hasNutFlush)
   }
 
-  func test_nut_flush_in_community_cards() {
+  func testNoNutFlush_inCommunityCards() {
     let holeCards = [card(.ace, .diamonds), card(.king, .diamonds)]
     let communityCards = [
       card(.ace, .hearts),
@@ -146,7 +146,7 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectFalse(hasNutFlush)
   }
 
-  func test_no_nut_flush() {
+  func testNoNutFlush() {
     let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.queen, .hearts),
@@ -158,12 +158,12 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     expectFalse(hasNutFlush)
   }
 
-  func test_no_nut_flush_too_few_cards() {
+  func testNoNutFlush_tooFewCards() {
     let hasNutFlush = sut.hasNutFlush(holeCards: [], communityCards: [])
     expectFalse(hasNutFlush)
   }
 
-  func test_no_nut_flush_too_many_cards() {
+  func testNoNutFlush_tooManyCards() {
     let holeCards = [card(.ace, .hearts), card(.king, .diamonds)]
     let communityCards = [
       card(.queen, .hearts),
