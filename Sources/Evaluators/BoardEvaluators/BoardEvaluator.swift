@@ -85,9 +85,17 @@ struct BoardEvaluator {
     return isNToFlush(4, cards: cards)
   }
 
+  /// Checks if the board has one pair.
+  /// Two cards form a pair if they have the same rank.
+  ///
+  /// - Parameter cards: An array of type `Card` that represents the cards on the board.
+  ///
+  /// - Returns: True if the board has one pair, false otherwise.
   @inlinable
   public func hasOnePair(cards: [Card]) -> Bool {
-    return false
+    guard cards.count >= 3, cards.count <= 5 else { return false }
+
+    return nPairs(cards: cards) == 1
   }
 
   @inlinable
@@ -117,5 +125,11 @@ struct BoardEvaluator {
     let uniqueCards = Set(cards)
     let suitHistogram = Array(uniqueCards).suitHistogram()
     return suitHistogram.values.contains(n)
+  }
+
+  private func nPairs(cards: [Card]) -> Int {
+    let uniqueCards = Set(cards)
+    let rankHistogram = Array(uniqueCards).rankHistogram()
+    return rankHistogram.values.filter { $0 == 2 }.count
   }
 }
