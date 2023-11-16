@@ -13,18 +13,6 @@ import Types
 /// Each method independently checks for a particular board feature,
 /// without considering its overall texture.
 struct BoardEvaluator {
-  private let possibleStraights: [Set<Rank>] = [
-    [Rank.ace, .two, .three, .four, .five],
-    [Rank.two, .three, .four, .five, .six],
-    [Rank.three, .four, .five, .six, .seven],
-    [Rank.four, .five, .six, .seven, .eight],
-    [Rank.five, .six, .seven, .eight, .nine],
-    [Rank.six, .seven, .eight, .nine, .ten],
-    [Rank.seven, .eight, .nine, .ten, .jack],
-    [Rank.eight, .nine, .ten, .jack, .queen],
-    [Rank.nine, .ten, .jack, .queen, .king],
-    [Rank.ten, .jack, .queen, .king, .ace],
-  ]
 
   /// Checks if any three cards on the board can potentially form a straight.
   ///
@@ -105,6 +93,19 @@ struct BoardEvaluator {
     _ n: Int,
     ranks: [Rank]
   ) -> Bool {
+    let possibleStraights: [Set<Rank>] = [
+      [Rank.ace, .two, .three, .four, .five],
+      [Rank.two, .three, .four, .five, .six],
+      [Rank.three, .four, .five, .six, .seven],
+      [Rank.four, .five, .six, .seven, .eight],
+      [Rank.five, .six, .seven, .eight, .nine],
+      [Rank.six, .seven, .eight, .nine, .ten],
+      [Rank.seven, .eight, .nine, .ten, .jack],
+      [Rank.eight, .nine, .ten, .jack, .queen],
+      [Rank.nine, .ten, .jack, .queen, .king],
+      [Rank.ten, .jack, .queen, .king, .ace],
+    ]
+
     for straight in possibleStraights {
       let intersection = Set(ranks).intersection(straight)
       if intersection.count >= n {
