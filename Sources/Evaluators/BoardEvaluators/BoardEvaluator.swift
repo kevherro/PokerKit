@@ -34,11 +34,8 @@ struct BoardEvaluator {
   @inlinable
   public func hasThreeToStraight(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
-
-    let uniqueRanks = Set(cards.ranks())
-
-    return !isNToStraight(5, ranks: uniqueRanks)
-      && isNToStraight(3, ranks: uniqueRanks)
+    let ranks = cards.ranks()
+    return !isNToStraight(5, ranks: ranks) && isNToStraight(3, ranks: ranks)
   }
 
   /// Checks if any four cards on the board can potentially form a straight.
@@ -49,11 +46,8 @@ struct BoardEvaluator {
   @inlinable
   public func hasFourToStraight(cards: [Card]) -> Bool {
     guard check(cards) else { return false }
-
-    let uniqueRanks = Set(cards.ranks())
-
-    return !isNToStraight(5, ranks: uniqueRanks)
-      && isNToStraight(4, ranks: uniqueRanks)
+    let ranks = cards.ranks()
+    return !isNToStraight(5, ranks: ranks) && isNToStraight(4, ranks: ranks)
   }
 
   /// Checks if any three cards on the board can potentially form a flush.
@@ -109,10 +103,10 @@ struct BoardEvaluator {
 
   private func isNToStraight(
     _ n: Int,
-    ranks: Set<Rank>
+    ranks: [Rank]
   ) -> Bool {
     for straight in possibleStraights {
-      let intersection = ranks.intersection(straight)
+      let intersection = Set(ranks).intersection(straight)
       if intersection.count >= n {
         return true
       }
