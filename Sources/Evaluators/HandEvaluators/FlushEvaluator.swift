@@ -9,11 +9,9 @@
 import Types
 
 /// `FlushEvaluator` provides methods to evaluate specific flushed hand types.
+///
 /// Each method independently checks for a particular hand type without considering
 /// the overall strength of the hand in the context of NLHE poker hand rankings.
-///
-/// - Note: `FlushEvaluator` does not rank hand strengths.
-/// Therefore, it's possible for multiple methods to return `true` for the same hand.
 public struct FlushEvaluator {
 
   /// A hand of five cards of the same suit, using zero, one, or two hole cards.

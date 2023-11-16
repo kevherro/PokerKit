@@ -9,11 +9,9 @@
 import Types
 
 /// `PairEvaluator` provides methods to evaluate specific paired hand types.
+///
 /// Each method independently checks for a particular hand type without considering
 /// the overall strength of the hand in the context of NLHE poker hand rankings.
-///
-/// - Note: `PairEvaluator` does not rank hand strengths.
-/// Therefore, it's possible for multiple methods to return `true` for the same hand.
 public struct PairEvaluator {
 
   /// Checks for a hand of one pair, using the highest card on the board.
