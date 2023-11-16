@@ -33,12 +33,13 @@ struct BoardEvaluator {
   /// - Returns: True if there is a potential straight, false otherwise.
   @inlinable
   public func hasThreeToStraight(cards: [Card]) -> Bool {
-    guard cards.count >= 3, cards.count <= 5 else { return false }
+    guard check(cards) else { return false }
 
     let uniqueRanks = Set(cards.ranks())
+    let isCompleteStraight = isNToStraight(5, ranks: uniqueRanks)
+    let isThreeToStraight = isNToStraight(3, ranks: uniqueRanks)
 
-    return !isNToStraight(5, ranks: uniqueRanks)
-      && isNToStraight(3, ranks: uniqueRanks)
+    return !isCompleteStraight && isThreeToStraight
   }
 
   @inlinable
@@ -53,12 +54,13 @@ struct BoardEvaluator {
   /// - Returns: True if there is a potential straight, false otherwise.
   @inlinable
   public func hasFourToStraight(cards: [Card]) -> Bool {
-    guard cards.count >= 3, cards.count <= 5 else { return false }
+    guard check(cards) else { return false }
 
     let uniqueRanks = Set(cards.ranks())
+    let isCompleteStraight = isNToStraight(5, ranks: uniqueRanks)
+    let isFourToStraight = isNToStraight(4, ranks: uniqueRanks)
 
-    return !isNToStraight(5, ranks: uniqueRanks)
-      && isNToStraight(4, ranks: uniqueRanks)
+    return !isCompleteStraight && isFourToStraight
   }
 
   /// Checks if any three cards on the board can potentially form a flush.
@@ -68,8 +70,7 @@ struct BoardEvaluator {
   /// - Returns: True if there is a potential flush, false otherwise.
   @inlinable
   public func hasThreeToFlush(cards: [Card]) -> Bool {
-    guard cards.count >= 3, cards.count <= 5 else { return false }
-
+    guard check(cards) else { return false }
     return isNToFlush(3, cards: cards)
   }
 
@@ -80,8 +81,7 @@ struct BoardEvaluator {
   /// - Returns: True if there is a potential flush, false otherwise.
   @inlinable
   public func hasFourToFlush(cards: [Card]) -> Bool {
-    guard cards.count >= 3, cards.count <= 5 else { return false }
-
+    guard check(cards) else { return false }
     return isNToFlush(4, cards: cards)
   }
 
@@ -93,8 +93,7 @@ struct BoardEvaluator {
   /// - Returns: True if the board has one pair, false otherwise.
   @inlinable
   public func hasOnePair(cards: [Card]) -> Bool {
-    guard cards.count >= 3, cards.count <= 5 else { return false }
-
+    guard check(cards) else { return false }
     return nPairs(cards: cards) == 1
   }
 
@@ -104,6 +103,11 @@ struct BoardEvaluator {
   }
 
   // MARK: -
+
+  private func check(_ cards: [Card]) -> Bool {
+    return cards.count >= 3 && cards.count <= 5
+      && Set(cards).count == cards.count
+  }
 
   private func isNToStraight(
     _ n: Int,
@@ -122,14 +126,12 @@ struct BoardEvaluator {
     _ n: Int,
     cards: [Card]
   ) -> Bool {
-    let uniqueCards = Set(cards)
-    let suitHistogram = Array(uniqueCards).suitHistogram()
+    let suitHistogram = cards.suitHistogram()
     return suitHistogram.values.contains(n)
   }
 
   private func nPairs(cards: [Card]) -> Int {
-    let uniqueCards = Set(cards)
-    let rankHistogram = Array(uniqueCards).rankHistogram()
+    let rankHistogram = cards.rankHistogram()
     return rankHistogram.values.filter { $0 == 2 }.count
   }
 }
