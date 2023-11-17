@@ -44,4 +44,85 @@ final class BoardTypeFactoryTests: PokerKitTestCase {
     let boardType = sut.makeBoardType(cards: cards)
     expectTrue(boardType is ScaryBoard)
   }
+
+  // MARK: Very Scary Board
+
+  func testMakeBoardType_veryScaryBoard_possibleStraight_possibleFlush() {
+    let cards = [
+      card(.queen, .hearts),
+      card(.jack, .hearts),
+      card(.ten, .hearts),
+      card(.nine, .hearts),
+    ]
+    let boardType = sut.makeBoardType(cards: cards)
+    expectTrue(boardType is VeryScaryBoard)
+  }
+
+  func testMakeBoardType_veryScaryBoard_fourToFlush() {
+    let cards = [
+      card(.queen, .hearts),
+      card(.jack, .hearts),
+      card(.five, .hearts),
+      card(.four, .hearts),
+    ]
+    let boardType = sut.makeBoardType(cards: cards)
+    expectTrue(boardType is VeryScaryBoard)
+  }
+
+  func testMakeBoardType_veryScaryBoard_fourToStraight() {
+    let cards = [
+      card(.queen, .hearts),
+      card(.jack, .diamonds),
+      card(.ten, .hearts),
+      card(.nine, .diamonds),
+    ]
+    let boardType = sut.makeBoardType(cards: cards)
+    expectTrue(boardType is VeryScaryBoard)
+  }
+
+  func testMakeBoardType_veryScaryBoard_fourToStraight_onePair() {
+    let cards = [
+      card(.queen, .hearts),
+      card(.jack, .diamonds),
+      card(.ten, .hearts),
+      card(.nine, .diamonds),
+      card(.nine, .clubs),
+    ]
+    let boardType = sut.makeBoardType(cards: cards)
+    expectTrue(boardType is VeryScaryBoard)
+  }
+
+  func testMakeBoardType_veryScaryBoard_threeToFlush_onePair() {
+    let cards = [
+      card(.queen, .hearts),
+      card(.nine, .hearts),
+      card(.seven, .hearts),
+      card(.seven, .diamonds),
+    ]
+    let boardType = sut.makeBoardType(cards: cards)
+    expectTrue(boardType is VeryScaryBoard)
+  }
+
+  func testMakeBoardType_veryScaryBoard_fourToFlush_onePair() {
+    let cards = [
+      card(.queen, .hearts),
+      card(.nine, .hearts),
+      card(.seven, .hearts),
+      card(.seven, .diamonds),
+      card(.six, .hearts),
+    ]
+    let boardType = sut.makeBoardType(cards: cards)
+    expectTrue(boardType is VeryScaryBoard)
+  }
+
+  func testMakeBoardType_veryScaryBoard_twoPair() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+      card(.king, .hearts),
+      card(.king, .diamonds),
+    ]
+    let boardType = sut.makeBoardType(cards: cards)
+    expectTrue(boardType is VeryScaryBoard)
+  }
 }
