@@ -9,7 +9,9 @@
 import Evaluators
 import Types
 
-protocol BoardTypeProtocol {}
+protocol BoardTypeProtocol {
+  func minGoodHand(for street: Street) -> MinGoodHand
+}
 
 struct BoardTypeFactory {
   private let boardEvaluator = BoardEvaluator()

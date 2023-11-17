@@ -6,4 +6,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-struct VeryScaryBoard: BoardTypeProtocol {}
+import Types
+
+struct VeryScaryBoard: BoardTypeProtocol {
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    fatalError()
+  }
+}
