@@ -9,7 +9,7 @@
 import Types
 
 struct VeryScaryBoard: BoardTypeProtocol {
-  private let factory = VeryScaryBoardFactory()
+  private let factory = VeryScaryBoardTypeFactory()
 
   func minGoodHand(for context: BoardContext) -> MinGoodHand {
     let board = factory.makeBoard(from: context.features)
@@ -18,7 +18,7 @@ struct VeryScaryBoard: BoardTypeProtocol {
 
 }
 
-struct VeryScaryBoardFactory {
+struct VeryScaryBoardTypeFactory {
   func makeBoard(from features: Set<BoardFeature>) -> BoardTypeProtocol {
     var adjustedFeatures = features
     adjustedFeatures.remove(.aceHigh)
