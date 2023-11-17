@@ -9,30 +9,94 @@
 import Types
 
 struct ScaryBoard: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
+  private let board: BoardTypeProtocol
+
+  init(context: BoardContext) {
+    let factory = ScaryBoardTypeFactory()
+    self.board = factory.makeBoard(context: context)
+  }
+
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    return board.minGoodHand(for: street)
+  }
+}
+
+struct ScaryBoardTypeFactory {
+  func makeBoard(context: BoardContext) -> BoardTypeProtocol {
     let features = context.features
     let isAceHigh = context.isAceHigh
-    let street = context.street
 
+    if features == [.onePair] {
+      return ScaryBoard_OnePair(isAceHigh: isAceHigh)
+    } else if features == [.threeToStraight] {
+      return ScaryBoard_ThreeToStraight(isAceHigh: isAceHigh)
+    } else if features == [.threeToFlush] {
+      return ScaryBoard_ThreeToFlush(isAceHigh: isAceHigh)
+    } else {
+      return ScaryBoard_Default()
+    }
+  }
+}
+
+struct ScaryBoard_OnePair: BoardTypeProtocol {
+  private let isAceHigh: Bool
+
+  init(isAceHigh: Bool) {
+    self.isAceHigh = isAceHigh
+  }
+
+  func minGoodHand(for street: Street) -> MinGoodHand {
     switch street {
     case .flop:
       return .topPair
     case .turn:
       return isAceHigh ? .topPairTopKicker : .overpair
     case .river:
-      return minGoodHand(for: features)
+      return .trips
     }
   }
+}
 
-  private func minGoodHand(for features: Set<BoardFeature>) -> MinGoodHand {
-    if features == [.threeToFlush] {
-      return .flush
-    } else if features == [.threeToStraight] {
+struct ScaryBoard_ThreeToStraight: BoardTypeProtocol {
+  private let isAceHigh: Bool
+
+  init(isAceHigh: Bool) {
+    self.isAceHigh = isAceHigh
+  }
+
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
+    case .flop:
+      return .topPair
+    case .turn:
+      return isAceHigh ? .topPairTopKicker : .overpair
+    case .river:
       return .straight
-    } else if features == [.onePair] {
-      return .trips
-    } else {
-      fatalError("invalid features for scary board: \(features)")
     }
+  }
+}
+
+struct ScaryBoard_ThreeToFlush: BoardTypeProtocol {
+  private let isAceHigh: Bool
+
+  init(isAceHigh: Bool) {
+    self.isAceHigh = isAceHigh
+  }
+
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
+    case .flop:
+      return .topPair
+    case .turn:
+      return isAceHigh ? .topPairTopKicker : .overpair
+    case .river:
+      return .flush
+    }
+  }
+}
+
+struct ScaryBoard_Default: BoardTypeProtocol {
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    fatalError()
   }
 }

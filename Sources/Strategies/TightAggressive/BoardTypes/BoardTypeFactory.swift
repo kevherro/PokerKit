@@ -10,29 +10,60 @@ import Evaluators
 import Types
 
 protocol BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand
+  func minGoodHand(for street: Street) -> MinGoodHand
 }
 
 struct BoardContext {
-  let street: Street
   let features: Set<BoardFeature>
   let isAceHigh: Bool
-  let isTJQK: Bool
+  let hasTJQK: Bool
+}
+
+struct BoardContextBuilder {
+  private let boardEvaluator = BoardEvaluator()
+
+  func build(cards: [Card]) -> BoardContext {
+    let features = features(cards: cards)
+    let isAceHigh = boardEvaluator.isAceHigh(cards: cards)
+    let hasTJQK = hasTJQK(cards: cards)
+
+    let context = BoardContext(
+      features: features,
+      isAceHigh: isAceHigh,
+      hasTJQK: hasTJQK
+    )
+
+    return context
+  }
+
+  private func features(cards: [Card]) -> Set<BoardFeature> {
+    return []
+  }
+
+  private func hasTJQK(cards: [Card]) -> Bool {
+    let ranks = cards.map(\.rank)
+    return ranks.contains(.ten)
+      && ranks.contains(.jack)
+      && ranks.contains(.queen)
+      && ranks.contains(.king)
+  }
 }
 
 struct BoardTypeFactory {
   private let boardEvaluator = BoardEvaluator()
 
   func makeBoardType(cards: [Card]) -> BoardTypeProtocol {
+    let context = BoardContextBuilder().build(cards: cards)
+
     if isVeryScary(cards: cards) {
-      return VeryScaryBoard()
+      return VeryScaryBoard(context: context)
     }
 
     if isScary(cards: cards) {
-      return ScaryBoard()
+      return ScaryBoard(context: context)
     }
 
-    return NonScaryBoard()
+    return NonScaryBoard(context: context)
   }
 
   private func isScary(cards: [Card]) -> Bool {

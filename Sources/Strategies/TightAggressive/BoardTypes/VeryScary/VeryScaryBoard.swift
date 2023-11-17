@@ -9,16 +9,23 @@
 import Types
 
 struct VeryScaryBoard: BoardTypeProtocol {
-  private let factory = VeryScaryBoardTypeFactory()
+  private let board: BoardTypeProtocol
 
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
-    let board = factory.makeBoard(from: context.features)
-    return board.minGoodHand(for: context)
+  init(context: BoardContext) {
+    let factory = VeryScaryBoardTypeFactory()
+    self.board = factory.makeBoard(context: context)
+  }
+
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    return board.minGoodHand(for: street)
   }
 }
 
 struct VeryScaryBoardTypeFactory {
-  func makeBoard(from features: Set<BoardFeature>) -> BoardTypeProtocol {
+  func makeBoard(context: BoardContext) -> BoardTypeProtocol {
+    let features = context.features
+    let hasTJQK = context.hasTJQK
+
     let isStraightPossible = isStraightPossible(features: features)
     let isFlushPossible = isFlushPossible(features: features)
 
@@ -27,7 +34,7 @@ struct VeryScaryBoardTypeFactory {
     } else if features == [.fourToFlush] {
       return VeryScaryBoard_FourToFlush()
     } else if features == [.fourToStraight] {
-      return VeryScaryBoard_FourToStraight()
+      return VeryScaryBoard_FourToStraight(hasTJQK: hasTJQK)
     } else if features == [.fourToStraight, .onePair] {
       return VeryScaryBoard_FourToStraight_OnePair()
     } else if isFlushPossible && features.contains(.onePair) {
@@ -51,8 +58,8 @@ struct VeryScaryBoardTypeFactory {
 }
 
 struct VeryScaryBoard_PossibleStraight_PossibleFlush: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
-    switch context.street {
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
     case .flop:
       return .straight
     case .turn:
@@ -64,8 +71,8 @@ struct VeryScaryBoard_PossibleStraight_PossibleFlush: BoardTypeProtocol {
 }
 
 struct VeryScaryBoard_FourToFlush: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
-    switch context.street {
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
     case .flop:
       fatalError("N/A")
     case .turn:
@@ -77,12 +84,18 @@ struct VeryScaryBoard_FourToFlush: BoardTypeProtocol {
 }
 
 struct VeryScaryBoard_FourToStraight: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
-    switch context.street {
+  private let hasTJQK: Bool
+
+  init(hasTJQK: Bool) {
+    self.hasTJQK = hasTJQK
+  }
+
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
     case .flop:
       fatalError("N/A")
     case .turn:
-      return context.isTJQK ? .nutStraight : .straight
+      return hasTJQK ? .nutStraight : .straight
     case .river:
       return .bestStraightUsingOneHoleCard
     }
@@ -90,8 +103,8 @@ struct VeryScaryBoard_FourToStraight: BoardTypeProtocol {
 }
 
 struct VeryScaryBoard_FourToStraight_OnePair: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
-    switch context.street {
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
     case .flop:
       fatalError("N/A")
     case .turn:
@@ -103,8 +116,8 @@ struct VeryScaryBoard_FourToStraight_OnePair: BoardTypeProtocol {
 }
 
 struct VeryScaryBoard_PossibleFlush_OnePair: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
-    switch context.street {
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
     case .flop:
       fatalError("N/A")
     case .turn:
@@ -116,8 +129,8 @@ struct VeryScaryBoard_PossibleFlush_OnePair: BoardTypeProtocol {
 }
 
 struct VeryScaryBoard_TwoPair: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
-    switch context.street {
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
     case .flop:
       fatalError("N/A")
     case .turn:
@@ -129,7 +142,7 @@ struct VeryScaryBoard_TwoPair: BoardTypeProtocol {
 }
 
 struct VeryScaryBoard_Default: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
+  func minGoodHand(for street: Street) -> MinGoodHand {
     fatalError()
   }
 }

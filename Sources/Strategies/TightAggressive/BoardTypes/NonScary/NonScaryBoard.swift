@@ -9,14 +9,20 @@
 import Types
 
 struct NonScaryBoard: BoardTypeProtocol {
-  func minGoodHand(for context: BoardContext) -> MinGoodHand {
-    switch context.street {
+  private let isAceHigh: Bool
+
+  init(context: BoardContext) {
+    self.isAceHigh = context.isAceHigh
+  }
+
+  func minGoodHand(for street: Street) -> MinGoodHand {
+    switch street {
     case .flop:
       return .secondPair
     case .turn:
       return .topPair
     case .river:
-      return context.isAceHigh ? .topPairTopKicker : .overpair
+      return isAceHigh ? .topPairTopKicker : .overpair
     }
   }
 }
