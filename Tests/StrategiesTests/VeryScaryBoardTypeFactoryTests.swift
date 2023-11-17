@@ -133,4 +133,12 @@ final class VeryScaryBoardTypeFactoryTests: PokerKitTestCase {
     let boardType = sut.makeBoard(from: features)
     expectTrue(boardType is VeryScaryBoard_TwoPair)
   }
+
+  // MARK: Invalid Feature Combinations
+
+  func testInvalidFeatureCombinations() {
+    let features = Set([BoardFeature.twoPair, .fourToStraight])
+    let boardType = sut.makeBoard(from: features)
+    expectTrue(boardType is VeryScaryBoard_Default)
+  }
 }

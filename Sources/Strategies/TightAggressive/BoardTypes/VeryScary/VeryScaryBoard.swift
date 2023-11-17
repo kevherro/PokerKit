@@ -15,7 +15,6 @@ struct VeryScaryBoard: BoardTypeProtocol {
     let board = factory.makeBoard(from: context.features)
     return board.minGoodHand(for: context)
   }
-
 }
 
 struct VeryScaryBoardTypeFactory {
@@ -39,7 +38,7 @@ struct VeryScaryBoardTypeFactory {
     } else if adjustedFeatures == [.twoPair] {
       return VeryScaryBoard_TwoPair()
     } else {
-      fatalError("invalid board features for very scary")
+      return VeryScaryBoard_Default()
     }
   }
 
@@ -129,5 +128,11 @@ struct VeryScaryBoard_TwoPair: BoardTypeProtocol {
     case .river:
       fatalError("best full house using one hole card")
     }
+  }
+}
+
+struct VeryScaryBoard_Default: BoardTypeProtocol {
+  func minGoodHand(for context: BoardContext) -> MinGoodHand {
+    fatalError()
   }
 }
