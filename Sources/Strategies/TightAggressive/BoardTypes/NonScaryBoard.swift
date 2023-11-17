@@ -6,12 +6,4 @@
 //
 //===----------------------------------------------------------------------===//
 
-public enum BoardFeature {
-  case onePair,
-    twoPair,
-    threeToFlush,
-    threeToStraight,
-    threeToOpenEndedStraight,
-    fourToFlush,
-    fourToStraight
-}
+struct NonScaryBoard: BoardTypeProtocol {}

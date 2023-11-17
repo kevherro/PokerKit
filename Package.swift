@@ -61,14 +61,6 @@ extension CustomTarget {
 let targets: [CustomTarget] = [
   .target(
     kind: .exported,
-    name: "Evaluators",
-    dependencies: [
-      "Types",
-      .product(name: "Algorithms", package: "swift-algorithms"),
-    ]
-  ),
-  .target(
-    kind: .exported,
     name: "Types"
   ),
   .target(
@@ -77,19 +69,41 @@ let targets: [CustomTarget] = [
     dependencies: ["Types"]
   ),
   .target(
-    kind: .test,
-    name: "EvaluatorTests",
-    dependencies: ["Evaluators", "_PokerKitTestSupport"]
-  ),
-  .target(
     kind: .exported,
     name: "PokerKit",
     dependencies: ["Types"]
   ),
   .target(
     kind: .exported,
+    name: "Evaluators",
+    dependencies: [
+      "Types",
+      .product(name: "Algorithms", package: "swift-algorithms"),
+    ]
+  ),
+  .target(
+    kind: .test,
+    name: "EvaluatorTests",
+    dependencies: [
+      "Evaluators",
+      "_PokerKitTestSupport",
+    ]
+  ),
+  .target(
+    kind: .exported,
     name: "Strategies",
-    dependencies: ["Types"]
+    dependencies: [
+      "Types",
+      "Evaluators",
+    ]
+  ),
+  .target(
+    kind: .test,
+    name: "StrategiesTests",
+    dependencies: [
+      "Strategies",
+      "_PokerKitTestSupport",
+    ]
   ),
 ]
 

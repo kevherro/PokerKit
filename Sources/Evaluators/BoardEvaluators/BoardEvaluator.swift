@@ -1,5 +1,4 @@
 //===----------------------------------------------------------------------===//
-//
 // This source file is part of the PokerKit project.
 //
 // Copyright (c) 2023 Kevin Herro
@@ -13,6 +12,7 @@ import Types
 /// Each method independently checks for a particular board feature,
 /// without considering its overall texture.
 public struct BoardEvaluator {
+  public init() {}
 
   /// Checks if any three cards on the board can potentially form a straight.
   ///
