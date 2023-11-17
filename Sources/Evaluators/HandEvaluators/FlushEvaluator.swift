@@ -13,6 +13,7 @@ import Types
 /// Each method independently checks for a particular hand type without considering
 /// the overall strength of the hand in the context of NLHE poker hand rankings.
 public struct FlushEvaluator {
+  public init() {}
 
   /// A hand of five cards of the same suit, using zero, one, or two hole cards.
   ///

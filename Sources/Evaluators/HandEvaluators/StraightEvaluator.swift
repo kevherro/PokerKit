@@ -14,6 +14,7 @@ import Types
 /// Each method independently checks for a particular hand type without considering
 /// the overall strength of the hand in the context of NLHE poker hand rankings.
 public struct StraightEvaluator {
+  public init() {}
 
   /// A hand of five sequential cards, using zero, one, or two hole cards.
   ///
