@@ -70,7 +70,7 @@ struct VeryScaryBoard_FourToFlush: BoardTypeProtocol {
   func minGoodHand(for context: BoardContext) -> MinGoodHand {
     switch context.street {
     case .flop:
-      fatalError()
+      fatalError("N/A")
     case .turn:
       return .secondNutFlush
     case .river:
@@ -83,11 +83,11 @@ struct VeryScaryBoard_FourToStraight: BoardTypeProtocol {
   func minGoodHand(for context: BoardContext) -> MinGoodHand {
     switch context.street {
     case .flop:
-      fatalError()
+      fatalError("N/A")
     case .turn:
       fatalError("straight or nut straight on board of TJQK")
     case .river:
-      fatalError("best straight using one hole card")
+      return .bestStraightUsingOneHoleCard
     }
   }
 }
@@ -96,7 +96,7 @@ struct VeryScaryBoard_FourToStraight_OnePair: BoardTypeProtocol {
   func minGoodHand(for context: BoardContext) -> MinGoodHand {
     switch context.street {
     case .flop:
-      fatalError()
+      fatalError("N/A")
     case .turn:
       return .nutStraight
     case .river:
@@ -109,7 +109,7 @@ struct VeryScaryBoard_PossibleFlush_OnePair: BoardTypeProtocol {
   func minGoodHand(for context: BoardContext) -> MinGoodHand {
     switch context.street {
     case .flop:
-      fatalError()
+      fatalError("N/A")
     case .turn:
       return .nutFlush
     case .river:
@@ -122,11 +122,11 @@ struct VeryScaryBoard_TwoPair: BoardTypeProtocol {
   func minGoodHand(for context: BoardContext) -> MinGoodHand {
     switch context.street {
     case .flop:
-      fatalError()
+      fatalError("N/A")
     case .turn:
       return .fullHouse
     case .river:
-      fatalError("best full house using one hole card")
+      return .bestFullHouseUsingOneHoleCard
     }
   }
 }

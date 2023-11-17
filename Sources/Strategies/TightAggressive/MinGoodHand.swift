@@ -15,11 +15,13 @@ enum MinGoodHand:
   case overpair
   case trips
   case straight
+  case bestStraightUsingOneHoleCard
   case nutStraight
   case flush
   case secondNutFlush
   case nutFlush
   case fullHouse
+  case bestFullHouseUsingOneHoleCard
 
   static func < (lhs: MinGoodHand, rhs: MinGoodHand) -> Bool {
     return lhs.rawValue < rhs.rawValue
