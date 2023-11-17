@@ -8,8 +8,8 @@
 
 import Types
 
-struct VeryScaryBoard: BoardTypeProtocol {
-  func minGoodHand(for street: Street) -> MinGoodHand {
+struct ScaryBoard: BoardTypeProtocol {
+  func minGoodHand(for context: BoardContext) -> MinGoodHand {
     fatalError()
   }
 }

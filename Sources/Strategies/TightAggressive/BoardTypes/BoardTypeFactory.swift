@@ -10,7 +10,12 @@ import Evaluators
 import Types
 
 protocol BoardTypeProtocol {
-  func minGoodHand(for street: Street) -> MinGoodHand
+  func minGoodHand(for context: BoardContext) -> MinGoodHand
+}
+
+struct BoardContext {
+  let street: Street
+  let features: [BoardFeature]
 }
 
 struct BoardTypeFactory {

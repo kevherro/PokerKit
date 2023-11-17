@@ -8,8 +8,15 @@
 
 import Types
 
-struct ScaryBoard: BoardTypeProtocol {
-  func minGoodHand(for street: Street) -> MinGoodHand {
-    fatalError()
+struct NonScaryBoard: BoardTypeProtocol {
+  func minGoodHand(for context: BoardContext) -> MinGoodHand {
+    switch context.street {
+    case .flop:
+      return .secondPair
+    case .turn:
+      return .topPair
+    case .river:
+      return .overpair
+    }
   }
 }

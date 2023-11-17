@@ -543,4 +543,58 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     let hasTwoPair = sut.hasTwoPair(cards: cards)
     expectFalse(hasTwoPair)
   }
+
+  // MARK: Ace High
+
+  func testAceHigh() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.four, .diamonds),
+      card(.five, .hearts),
+    ]
+    let isAceHigh = sut.isAceHigh(cards: cards)
+    expectTrue(isAceHigh)
+  }
+
+  func testNoAceHigh() {
+    let cards = [
+      card(.king, .hearts),
+      card(.four, .diamonds),
+      card(.five, .hearts),
+    ]
+    let isAceHigh = sut.isAceHigh(cards: cards)
+    expectFalse(isAceHigh)
+  }
+
+  func testAceHigh_tooFewCards() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.four, .diamonds),
+    ]
+    let isAceHigh = sut.isAceHigh(cards: cards)
+    expectFalse(isAceHigh)
+  }
+
+  func testAceHigh_tooManyCards() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.four, .diamonds),
+      card(.six, .hearts),
+      card(.seven, .hearts),
+      card(.eight, .hearts),
+      card(.nine, .hearts),
+    ]
+    let isAceHigh = sut.isAceHigh(cards: cards)
+    expectFalse(isAceHigh)
+  }
+
+  func testAceHigh_invalidDupes() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.four, .hearts),
+      card(.four, .hearts),
+    ]
+    let isAceHigh = sut.isAceHigh(cards: cards)
+    expectFalse(isAceHigh)
+  }
 }

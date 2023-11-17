@@ -13,6 +13,7 @@ import Types
 /// Each method independently checks for a particular hand type without considering
 /// the overall strength of the hand in the context of NLHE poker hand rankings.
 public struct PairEvaluator {
+  public init() {}
 
   /// Checks for a hand of one pair, using the highest card on the board.
   ///

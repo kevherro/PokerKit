@@ -76,6 +76,16 @@ public struct BoardEvaluator {
     return nPairs(cards: cards) == 2
   }
 
+  /// Checks if the board contains an Ace.
+  ///
+  /// - Parameter cards: An array of type `Card` that represents the cards on the board.
+  ///
+  /// - Returns: True if the board is Ace high, false otherwise.
+  public func isAceHigh(cards: [Card]) -> Bool {
+    guard check(cards) else { return false }
+    return cards.contains(where: { $0.rank == .ace })
+  }
+
   // MARK: -
 
   private func check(_ cards: [Card]) -> Bool {

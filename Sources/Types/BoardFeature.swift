@@ -7,7 +7,8 @@
 //===----------------------------------------------------------------------===//
 
 public enum BoardFeature {
-  case onePair,
+  case aceHigh,
+    onePair,
     twoPair,
     threeToFlush,
     threeToStraight,
