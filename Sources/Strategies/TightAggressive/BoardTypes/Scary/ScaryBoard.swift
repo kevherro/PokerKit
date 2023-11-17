@@ -11,27 +11,25 @@ import Types
 struct ScaryBoard: BoardTypeProtocol {
   func minGoodHand(for context: BoardContext) -> MinGoodHand {
     let features = context.features
+    let isAceHigh = context.isAceHigh
     let street = context.street
 
     switch street {
     case .flop:
       return .topPair
     case .turn:
-      return features.contains(.aceHigh) ? .topPairTopKicker : .overpair
+      return isAceHigh ? .topPairTopKicker : .overpair
     case .river:
       return minGoodHand(for: features)
     }
   }
 
   private func minGoodHand(for features: Set<BoardFeature>) -> MinGoodHand {
-    var adjustedFeatures = features
-    adjustedFeatures.remove(.aceHigh)
-
-    if adjustedFeatures == [.threeToFlush] {
+    if features == [.threeToFlush] {
       return .flush
-    } else if adjustedFeatures == [.threeToStraight] {
+    } else if features == [.threeToStraight] {
       return .straight
-    } else if adjustedFeatures == [.onePair] {
+    } else if features == [.onePair] {
       return .trips
     } else {
       fatalError("invalid features for scary board: \(features)")

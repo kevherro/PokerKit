@@ -19,23 +19,20 @@ struct VeryScaryBoard: BoardTypeProtocol {
 
 struct VeryScaryBoardTypeFactory {
   func makeBoard(from features: Set<BoardFeature>) -> BoardTypeProtocol {
-    var adjustedFeatures = features
-    adjustedFeatures.remove(.aceHigh)
-
-    let isStraightPossible = isStraightPossible(features: adjustedFeatures)
+    let isStraightPossible = isStraightPossible(features: features)
     let isFlushPossible = isFlushPossible(features: features)
 
-    if isStraightPossible && isFlushPossible && !adjustedFeatures.contains(.onePair) {
+    if isStraightPossible && isFlushPossible && !features.contains(.onePair) {
       return VeryScaryBoard_PossibleStraight_PossibleFlush()
-    } else if adjustedFeatures == [.fourToFlush] {
+    } else if features == [.fourToFlush] {
       return VeryScaryBoard_FourToFlush()
-    } else if adjustedFeatures == [.fourToStraight] {
+    } else if features == [.fourToStraight] {
       return VeryScaryBoard_FourToStraight()
-    } else if adjustedFeatures == [.fourToStraight, .onePair] {
+    } else if features == [.fourToStraight, .onePair] {
       return VeryScaryBoard_FourToStraight_OnePair()
-    } else if isFlushPossible && adjustedFeatures.contains(.onePair) {
+    } else if isFlushPossible && features.contains(.onePair) {
       return VeryScaryBoard_PossibleFlush_OnePair()
-    } else if adjustedFeatures == [.twoPair] {
+    } else if features == [.twoPair] {
       return VeryScaryBoard_TwoPair()
     } else {
       return VeryScaryBoard_Default()
@@ -85,7 +82,7 @@ struct VeryScaryBoard_FourToStraight: BoardTypeProtocol {
     case .flop:
       fatalError("N/A")
     case .turn:
-      fatalError("straight or nut straight on board of TJQK")
+      return context.isTJQK ? .nutStraight : .straight
     case .river:
       return .bestStraightUsingOneHoleCard
     }
