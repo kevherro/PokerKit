@@ -16,7 +16,7 @@ struct NonScaryBoard: BoardTypeProtocol {
     case .turn:
       return .topPair
     case .river:
-      return .overpair
+      return context.features == [.aceHigh] ? .topPairTopKicker : .overpair
     }
   }
 }

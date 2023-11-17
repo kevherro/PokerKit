@@ -15,7 +15,7 @@ protocol BoardTypeProtocol {
 
 struct BoardContext {
   let street: Street
-  let features: [BoardFeature]
+  let features: Set<BoardFeature>
 }
 
 struct BoardTypeFactory {

@@ -13,6 +13,7 @@ enum MinGoodHand:
   case topPair
   case topPairTopKicker
   case overpair
+  case trips
   case straight
   case nutStraight
   case flush
