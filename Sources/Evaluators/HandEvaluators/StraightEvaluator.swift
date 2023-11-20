@@ -28,17 +28,8 @@ public struct StraightEvaluator {
     communityCards: [Card]
   ) -> Bool {
     guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
-
-    let rankValues = uniqueSortedRankValues(cards: holeCards + communityCards)
-
-    for chunk in rankValues.chunks(ofCount: 5) {
-      let slice = Array(chunk)
-      if isSequential(slice) {
-        return true
-      }
-    }
-
-    return false
+    let ranks = (holeCards + communityCards).ranks()
+    return isNToStraight(5, ranks: ranks)
   }
 
   // MARK: -
@@ -51,21 +42,5 @@ public struct StraightEvaluator {
       && communityCards.count >= 3 && communityCards.count <= 5
       && Set(holeCards).count == holeCards.count
       && Set(communityCards).count == communityCards.count
-  }
-
-  private func uniqueSortedRankValues(cards: [Card]) -> [Int] {
-    let rankValues = cards.ranks().map(\.rawValue)
-    let uniqueRankValues = Set(rankValues)
-    return uniqueRankValues.sorted()
-  }
-
-  private func isSequential(_ sequence: [Int]) -> Bool {
-    guard !sequence.isEmpty else { return false }
-    for i in 0..<sequence.count - 1 {
-      if sequence[i] != sequence[i + 1] - 1 {
-        return false
-      }
-    }
-    return true
   }
 }
