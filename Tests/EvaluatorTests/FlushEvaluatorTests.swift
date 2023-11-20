@@ -200,4 +200,89 @@ final class FlushEvaluatorTests: PokerKitTestCase {
     let hasNutFlush = sut.hasNutFlush(holeCards: holeCards, communityCards: communityCards)
     expectFalse(hasNutFlush)
   }
+
+  // MARK: Royal Flush
+
+  func testRoyalFlush() {
+    let holeCards = [card(.ten, .hearts), card(.jack, .hearts)]
+    let communityCards = [
+      card(.queen, .hearts),
+      card(.king, .hearts),
+      card(.ace, .hearts),
+    ]
+    let hasRoyalFlush = sut.hasRoyalFlush(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasRoyalFlush)
+  }
+
+  func testRoyalFlush_communityCards() {
+    let holeCards = [card(.jack, .hearts), card(.ten, .hearts)]
+    let communityCards = [
+      card(.ten, .hearts),
+      card(.jack, .hearts),
+      card(.queen, .hearts),
+      card(.king, .hearts),
+      card(.ace, .hearts),
+    ]
+    let hasRoyalFlush = sut.hasRoyalFlush(holeCards: holeCards, communityCards: communityCards)
+    expectTrue(hasRoyalFlush)
+  }
+
+  func testNoRoyalFlush_straight() {
+    let holeCards = [card(.ten, .hearts), card(.jack, .hearts)]
+    let communityCards = [
+      card(.queen, .hearts),
+      card(.king, .hearts),
+      card(.ace, .diamonds),
+    ]
+    let hasRoyalFlush = sut.hasRoyalFlush(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasRoyalFlush)
+  }
+
+  func testNoRoyalFlush_flush() {
+    let holeCards = [card(.ten, .hearts), card(.jack, .hearts)]
+    let communityCards = [
+      card(.queen, .hearts),
+      card(.king, .hearts),
+      card(.two, .hearts),
+    ]
+    let hasRoyalFlush = sut.hasRoyalFlush(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasRoyalFlush)
+  }
+
+  func testNoRoyalFlush_tooFewCards() {
+    let holeCards = [card(.jack, .hearts), card(.ten, .hearts)]
+    let communityCards = [
+      card(.queen, .hearts),
+      card(.king, .hearts),
+    ]
+    let hasRoyalFlush = sut.hasRoyalFlush(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasRoyalFlush)
+  }
+
+  func testNoRoyalFlush_tooManyCards() {
+    let holeCards = [card(.jack, .hearts), card(.ten, .hearts)]
+    let communityCards = [
+      card(.queen, .hearts),
+      card(.king, .hearts),
+      card(.ace, .hearts),
+      card(.eight, .hearts),
+      card(.nine, .hearts),
+      card(.seven, .hearts),
+    ]
+    let hasRoyalFlush = sut.hasRoyalFlush(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasRoyalFlush)
+  }
+
+  func testNoStraightFlush_invalidDupes() {
+    let holeCards = [card(.jack, .hearts), card(.ten, .hearts)]
+    let communityCards = [
+      card(.queen, .hearts),
+      card(.king, .hearts),
+      card(.king, .hearts),
+      card(.ace, .hearts),
+      card(.eight, .hearts),
+    ]
+    let hasRoyalFlush = sut.hasRoyalFlush(holeCards: holeCards, communityCards: communityCards)
+    expectFalse(hasRoyalFlush)
+  }
 }
