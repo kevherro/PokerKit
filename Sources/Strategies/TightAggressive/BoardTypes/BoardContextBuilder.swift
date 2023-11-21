@@ -6,7 +6,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Evaluators
 import Types
 
 struct BoardContext {
@@ -16,8 +15,6 @@ struct BoardContext {
 }
 
 struct BoardContextBuilder {
-  private let boardEvaluator = BoardEvaluator()
-
   func build(cards: [Card]) -> BoardContext {
     let vector = BoardFeatureVector(cards: cards)
     let isAceHigh = isAceHigh(cards: cards)
