@@ -22,76 +22,92 @@ enum BoardFeatureLabel {
 }
 
 struct BoardFeatureVector {
-  private var array: [Bool]
+  private let vector: [BoardFeature: Bool]
 
   var label: BoardFeatureLabel? {
-    if array == [true, false, false, false, false, false, false] {
+    let features = reducedFeatures()
+
+    if features == [.onePair] {
       return .onePair
     }
 
-    if array == [false, true, false, false, false, false, false] {
+    if features == [.twoPair] {
       return .twoPair
     }
 
-    if array == [false, false, true, false, false, false, false] {
+    if features == [.threeToFlush] {
       return .threeToFlush
     }
 
-    if array == [false, false, false, true, false, false, false] {
+    if features == [.threeToStraight] {
       return .threeToStraight
     }
 
-    if array == [false, false, false, false, true, false, false] {
-      fatalError()
-    }
-
-    if array == [false, false, false, false, false, true, false] {
+    if features == [.fourToFlush] {
       return .fourToFlush
     }
 
-    if array == [false, false, false, false, false, false, true] {
+    if features == [.fourToStraight] {
       return .fourToStraight
     }
 
-    if array == [false, false, true, true, false, false, false]
-      || array == [false, false, true, false, false, false, true]
-      || array == [false, false, false, true, false, true, false]
-      || array == [false, false, false, false, false, true, true]
-    {
-      return .possibleStraightPossibleFlush
-    }
-
-    if array == [true, false, false, false, false, false, true] {
+    if features == [.fourToStraight, .onePair] {
       return .fourToStraightOnePair
     }
 
-    if array == [true, false, true, false, false, false, false]
-      || array == [true, false, false, false, false, true, false]
+    if features == [.onePair, .threeToFlush]
+      || features == [.onePair, .fourToFlush]
     {
       return .possibleFlushOnePair
+    }
+
+    if features == [.threeToStraight, .threeToFlush]
+      || features == [.threeToStraight, .fourToFlush]
+      || features == [.fourToStraight, .threeToFlush]
+      || features == [.fourToStraight, .fourToFlush]
+    {
+      return .possibleStraightPossibleFlush
     }
 
     return nil
   }
 
   init(cards: [Card]) {
-    var array = Array(
-      repeating: false,
-      count: BoardFeature.allCases.count
-    )
+    let evaluator = BoardEvaluator()
+    self.vector = [
+      .onePair: evaluator.hasOnePair(cards: cards),
+      .twoPair: evaluator.hasTwoPair(cards: cards),
+      .threeToFlush: evaluator.hasThreeToFlush(cards: cards),
+      .threeToStraight: evaluator.hasThreeToStraight(cards: cards),
+      .fourToFlush: evaluator.hasFourToFlush(cards: cards),
+      .fourToStraight: evaluator.hasFourToStraight(cards: cards),
+    ]
+  }
 
-    let boardEvaluator = BoardEvaluator()
-    array[0] = boardEvaluator.hasOnePair(cards: cards)
-    array[1] = boardEvaluator.hasTwoPair(cards: cards)
-    array[2] =
-      boardEvaluator.hasThreeToFlush(cards: cards)
-      && !boardEvaluator.hasFourToFlush(cards: cards)
-    array[3] =
-      boardEvaluator.hasThreeToStraight(cards: cards)
-      && !boardEvaluator.hasFourToStraight(cards: cards)
-    array[5] = boardEvaluator.hasFourToFlush(cards: cards)
-    array[6] = boardEvaluator.hasFourToStraight(cards: cards)
+  // MARK: -
 
-    self.array = array
+  private func reducedFeatures() -> Set<BoardFeature> {
+    let features = vector.filter(\.value).map(\.key)
+    var reducedFeatures = Set(features)
+
+    if reducedFeatures.contains(.threeToFlush)
+      && reducedFeatures.contains(.fourToFlush)
+    {
+      reducedFeatures.remove(.threeToFlush)
+    }
+
+    if reducedFeatures.contains(.threeToStraight)
+      && reducedFeatures.contains(.fourToStraight)
+    {
+      reducedFeatures.remove(.threeToStraight)
+    }
+
+    if reducedFeatures.contains(.onePair)
+      && reducedFeatures.contains(.twoPair)
+    {
+      reducedFeatures.remove(.onePair)
+    }
+
+    return reducedFeatures
   }
 }
