@@ -13,6 +13,20 @@ import _PokerKitTestSupport
 final class BoardTypeFactoryTests: PokerKitTestCase {
   private let sut = BoardTypeFactory()
 
+  // MARK: Non Scary Board
+
+  func testMakeBoardType_nonScaryBoard() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.queen, .diamonds),
+      card(.eight, .clubs),
+      card(.six, .spades),
+      card(.three, .hearts),
+    ]
+    let boardType = sut.makeBoardType(cards: cards)
+    expectTrue(boardType is NonScaryBoard)
+  }
+
   // MARK: Scary Board
 
   func testMakeBoardType_scaryBoard_onePair() {

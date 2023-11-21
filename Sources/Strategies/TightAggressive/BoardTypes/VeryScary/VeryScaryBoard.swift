@@ -23,37 +23,25 @@ struct VeryScaryBoard: BoardTypeProtocol {
 
 struct VeryScaryBoardTypeFactory {
   func makeBoard(context: BoardContext) -> BoardTypeProtocol {
-    let features = context.features
-    let hasTJQK = context.hasTJQK
+    let featureSet = context.featureSet
 
-    let isStraightPossible = isStraightPossible(features: features)
-    let isFlushPossible = isFlushPossible(features: features)
-
-    if isStraightPossible && isFlushPossible && !features.contains(.onePair) {
+    switch featureSet {
+    case .possibleStraightPossibleFlush:
       return VeryScaryBoard_PossibleStraight_PossibleFlush()
-    } else if features == [.fourToFlush] {
+    case .fourToFlush:
       return VeryScaryBoard_FourToFlush()
-    } else if features == [.fourToStraight] {
+    case .fourToStraight:
+      let hasTJQK = context.hasTJQK
       return VeryScaryBoard_FourToStraight(hasTJQK: hasTJQK)
-    } else if features == [.fourToStraight, .onePair] {
+    case .fourToStraightOnePair:
       return VeryScaryBoard_FourToStraight_OnePair()
-    } else if isFlushPossible && features.contains(.onePair) {
+    case .possibleFlushOnePair:
       return VeryScaryBoard_PossibleFlush_OnePair()
-    } else if features == [.twoPair] {
+    case .twoPair:
       return VeryScaryBoard_TwoPair()
-    } else {
-      return VeryScaryBoard_Default()
+    default:
+      fatalError()
     }
-  }
-
-  private func isStraightPossible(features: Set<BoardFeature>) -> Bool {
-    return features.contains(.threeToStraight)
-      || features.contains(.fourToStraight)
-  }
-
-  private func isFlushPossible(features: Set<BoardFeature>) -> Bool {
-    return features.contains(.threeToFlush)
-      || features.contains(.fourToFlush)
   }
 }
 
@@ -138,11 +126,5 @@ struct VeryScaryBoard_TwoPair: BoardTypeProtocol {
     case .river:
       return .bestFullHouseUsingOneHoleCard
     }
-  }
-}
-
-struct VeryScaryBoard_Default: BoardTypeProtocol {
-  func minGoodHand(for street: Street) -> MinGoodHand {
-    fatalError()
   }
 }

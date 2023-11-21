@@ -23,17 +23,18 @@ struct ScaryBoard: BoardTypeProtocol {
 
 struct ScaryBoardTypeFactory {
   func makeBoard(context: BoardContext) -> BoardTypeProtocol {
-    let features = context.features
+    let featureSet = context.featureSet
     let isAceHigh = context.isAceHigh
 
-    if features == [.onePair] {
+    switch featureSet {
+    case .onePair:
       return ScaryBoard_OnePair(isAceHigh: isAceHigh)
-    } else if features == [.threeToStraight] {
+    case .threeToStraight:
       return ScaryBoard_ThreeToStraight(isAceHigh: isAceHigh)
-    } else if features == [.threeToFlush] {
+    case .threeToFlush:
       return ScaryBoard_ThreeToFlush(isAceHigh: isAceHigh)
-    } else {
-      return ScaryBoard_Default()
+    default:
+      fatalError()
     }
   }
 }
@@ -92,11 +93,5 @@ struct ScaryBoard_ThreeToFlush: BoardTypeProtocol {
     case .river:
       return .flush
     }
-  }
-}
-
-struct ScaryBoard_Default: BoardTypeProtocol {
-  func minGoodHand(for street: Street) -> MinGoodHand {
-    fatalError()
   }
 }

@@ -55,6 +55,16 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
+  func testHasThreeToStraight_aceLowTwoGap() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.two, .hearts),
+      card(.five, .hearts),
+    ]
+    let hasThreeToStraight = sut.hasThreeToStraight(cards: cards)
+    expectTrue(hasThreeToStraight)
+  }
+
   func testHasThreeToStraight_aceHighSequential() {
     let cards = [
       card(.ace, .hearts),
