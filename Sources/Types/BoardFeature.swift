@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-public enum BoardFeature {
+public enum BoardFeature: CaseIterable {
   case onePair,
     twoPair,
     threeToFlush,

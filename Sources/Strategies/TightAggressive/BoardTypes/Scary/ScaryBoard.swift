@@ -23,10 +23,10 @@ struct ScaryBoard: BoardTypeProtocol {
 
 struct ScaryBoardTypeFactory {
   func makeBoard(context: BoardContext) -> BoardTypeProtocol {
-    let featureSet = context.featureSet
+    let label = context.vector.label
     let isAceHigh = context.isAceHigh
 
-    switch featureSet {
+    switch label {
     case .onePair:
       return ScaryBoard_OnePair(isAceHigh: isAceHigh)
     case .threeToStraight:

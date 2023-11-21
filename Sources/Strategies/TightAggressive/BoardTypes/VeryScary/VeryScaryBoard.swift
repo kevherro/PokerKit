@@ -23,9 +23,9 @@ struct VeryScaryBoard: BoardTypeProtocol {
 
 struct VeryScaryBoardTypeFactory {
   func makeBoard(context: BoardContext) -> BoardTypeProtocol {
-    let featureSet = context.featureSet
+    let label = context.vector.label
 
-    switch featureSet {
+    switch label {
     case .possibleStraightPossibleFlush:
       return VeryScaryBoard_PossibleStraight_PossibleFlush()
     case .fourToFlush:

@@ -123,7 +123,7 @@ final class BoardTypeFactoryTests: PokerKitTestCase {
       card(.nine, .hearts),
       card(.seven, .hearts),
       card(.seven, .diamonds),
-      card(.six, .hearts),
+      card(.two, .hearts),
     ]
     let boardType = sut.makeBoardType(cards: cards)
     expectTrue(boardType is VeryScaryBoard)

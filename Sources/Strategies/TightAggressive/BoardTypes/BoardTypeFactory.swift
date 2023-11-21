@@ -31,17 +31,19 @@ struct BoardTypeFactory {
   }
 
   private func isScary(context: BoardContext) -> Bool {
-    return context.featureSet == .onePair
-      || context.featureSet == .threeToStraight
-      || context.featureSet == .threeToFlush
+    let label = context.vector.label
+    return label == .onePair
+      || label == .threeToStraight
+      || label == .threeToFlush
   }
 
   private func isVeryScary(context: BoardContext) -> Bool {
-    return context.featureSet == .possibleStraightPossibleFlush
-      || context.featureSet == .fourToFlush
-      || context.featureSet == .fourToStraight
-      || context.featureSet == .fourToStraightOnePair
-      || context.featureSet == .possibleFlushOnePair
-      || context.featureSet == .twoPair
+    let label = context.vector.label
+    return label == .possibleStraightPossibleFlush
+      || label == .fourToFlush
+      || label == .fourToStraight
+      || label == .fourToStraightOnePair
+      || label == .possibleFlushOnePair
+      || label == .twoPair
   }
 }

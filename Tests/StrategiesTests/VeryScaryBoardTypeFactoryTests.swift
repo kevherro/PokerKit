@@ -9,44 +9,45 @@
 import _PokerKitTestSupport
 
 @testable import Strategies
+@testable import Types
 
 final class VeryScaryBoardTypeFactoryTests: PokerKitTestCase {
   private let sut = VeryScaryBoardTypeFactory()
 
   func testPossibleStraightAndPossibleFlush() {
-    let boardType = makeBoardType(featureSet: .possibleStraightPossibleFlush)
+    let boardType = makeBoardType(for: .possibleStraightPossibleFlush)
     expectTrue(boardType is VeryScaryBoard_PossibleStraight_PossibleFlush)
   }
 
   func testFourToFlush() {
-    let boardType = makeBoardType(featureSet: .fourToFlush)
+    let boardType = makeBoardType(for: .fourToFlush)
     expectTrue(boardType is VeryScaryBoard_FourToFlush)
   }
 
   func testFourToStraight() {
-    let boardType = makeBoardType(featureSet: .fourToStraight)
+    let boardType = makeBoardType(for: .fourToStraight)
     expectTrue(boardType is VeryScaryBoard_FourToStraight)
   }
 
   func testFourToStraight_onePair() {
-    let boardType = makeBoardType(featureSet: .fourToStraightOnePair)
+    let boardType = makeBoardType(for: .fourToStraightOnePair)
     expectTrue(boardType is VeryScaryBoard_FourToStraight_OnePair)
   }
 
   func testPossibleFlush_onePair() {
-    let boardType = makeBoardType(featureSet: .possibleFlushOnePair)
+    let boardType = makeBoardType(for: .possibleFlushOnePair)
     expectTrue(boardType is VeryScaryBoard_PossibleFlush_OnePair)
   }
 
   func testTwoPair() {
-    let boardType = makeBoardType(featureSet: .twoPair)
+    let boardType = makeBoardType(for: .twoPair)
     expectTrue(boardType is VeryScaryBoard_TwoPair)
   }
 
   // MARK: -
 
-  private func makeBoardType(featureSet: BoardFeatureSet) -> BoardTypeProtocol {
-    let context = BoardContext(featureSet: featureSet, isAceHigh: false, hasTJQK: false)
+  private func makeBoardType(for label: BoardFeatureLabel) -> BoardTypeProtocol {
+    let context = BoardContextFactory().makeBoardContext(for: label)
     return sut.makeBoard(context: context)
   }
 }

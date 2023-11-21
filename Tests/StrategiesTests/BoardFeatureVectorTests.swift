@@ -10,9 +10,7 @@ import _PokerKitTestSupport
 
 @testable import Strategies
 
-final class BoardContextBuilderTests: PokerKitTestCase {
-  private let sut = BoardContextBuilder()
-
+final class BoardFeatureVectorTests: PokerKitTestCase {
   // MARK: Non Scary
 
   func testNil() {
@@ -21,8 +19,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.ten, .diamonds),
       card(.five, .spades),
     ]
-    let context = sut.build(cards: cards)
-    expectNil(context.featureSet)
+    let vector = BoardFeatureVector(cards: cards)
+    expectNil(vector.label)
   }
 
   // MARK: Scary
@@ -33,8 +31,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.ace, .diamonds),
       card(.king, .hearts),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .onePair)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .onePair)
   }
 
   func testThreeToFlush() {
@@ -43,8 +41,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.ten, .hearts),
       card(.five, .hearts),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .threeToFlush)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .threeToFlush)
   }
 
   func testThreeToStraight() {
@@ -53,8 +51,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.queen, .diamonds),
       card(.jack, .hearts),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .threeToStraight)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .threeToStraight)
   }
 
   // MARK: Very Scary
@@ -66,8 +64,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.king, .hearts),
       card(.king, .diamonds),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .twoPair)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .twoPair)
   }
 
   func testFourToFlush() {
@@ -77,8 +75,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.seven, .hearts),
       card(.four, .hearts),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .fourToFlush)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .fourToFlush)
   }
 
   func testFourToStraight() {
@@ -88,8 +86,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.jack, .hearts),
       card(.ten, .diamonds),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .fourToStraight)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .fourToStraight)
   }
 
   func testPossibleStraightPossibleFlush_threeToStraight_threeToFlush() {
@@ -98,8 +96,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.queen, .hearts),
       card(.jack, .hearts),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .possibleStraightPossibleFlush)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .possibleStraightPossibleFlush)
   }
 
   func testPossibleStraightPossibleFlush_threeToStraight_fourToFlush() {
@@ -109,8 +107,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.jack, .hearts),
       card(.five, .hearts),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .possibleStraightPossibleFlush)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .possibleStraightPossibleFlush)
   }
 
   func testPossibleStraightPossibleFlush_fourToStraight_threeToFlush() {
@@ -120,8 +118,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.jack, .hearts),
       card(.ten, .diamonds),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .possibleStraightPossibleFlush)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .possibleStraightPossibleFlush)
   }
 
   func testPossibleStraightPossibleFlush_fourToFlush_fourToFlush() {
@@ -131,8 +129,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.jack, .hearts),
       card(.ten, .hearts),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .possibleStraightPossibleFlush)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .possibleStraightPossibleFlush)
   }
 
   func testFourToStraight_onePair() {
@@ -143,8 +141,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.ten, .hearts),
       card(.ten, .clubs),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .fourToStraightOnePair)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .fourToStraightOnePair)
   }
 
   func testPossibleFlush_onePair_threeToFlush() {
@@ -154,8 +152,8 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.five, .hearts),
       card(.five, .diamonds),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .possibleFlushOnePair)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .possibleFlushOnePair)
   }
 
   func testPossibleFlush_onePair_fourToFlush() {
@@ -166,7 +164,7 @@ final class BoardContextBuilderTests: PokerKitTestCase {
       card(.five, .diamonds),
       card(.two, .hearts),
     ]
-    let context = sut.build(cards: cards)
-    expectEqual(context.featureSet, .possibleFlushOnePair)
+    let vector = BoardFeatureVector(cards: cards)
+    expectEqual(vector.label, .possibleFlushOnePair)
   }
 }

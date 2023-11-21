@@ -9,29 +9,30 @@
 import _PokerKitTestSupport
 
 @testable import Strategies
+@testable import Types
 
 final class ScaryBoardTypeFactoryTests: PokerKitTestCase {
   private let sut = ScaryBoardTypeFactory()
 
   func testOnePair() {
-    let boardType = makeBoardType(featureSet: .onePair)
+    let boardType = makeBoardType(for: .onePair)
     expectTrue(boardType is ScaryBoard_OnePair)
   }
 
   func testThreeToStraight() {
-    let boardType = makeBoardType(featureSet: .threeToStraight)
+    let boardType = makeBoardType(for: .threeToStraight)
     expectTrue(boardType is ScaryBoard_ThreeToStraight)
   }
 
   func testThreeToFlush() {
-    let boardType = makeBoardType(featureSet: .threeToFlush)
+    let boardType = makeBoardType(for: .threeToFlush)
     expectTrue(boardType is ScaryBoard_ThreeToFlush)
   }
 
   // MARK: -
 
-  private func makeBoardType(featureSet: BoardFeatureSet) -> BoardTypeProtocol {
-    let context = BoardContext(featureSet: featureSet, isAceHigh: false, hasTJQK: false)
+  private func makeBoardType(for label: BoardFeatureLabel) -> BoardTypeProtocol {
+    let context = BoardContextFactory().makeBoardContext(for: label)
     return sut.makeBoard(context: context)
   }
 }
