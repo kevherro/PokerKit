@@ -109,7 +109,10 @@ final class StraightEvaluatorTests: PokerKitTestCase {
       card(.five, .hearts),
       card(.six, .hearts),
     ]
-    let hasStraightFlush = sut.hasStraightFlush(holeCards: holeCards, communityCards: communityCards)
+    let hasStraightFlush = sut.hasStraightFlush(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectTrue(hasStraightFlush)
   }
 
@@ -122,7 +125,10 @@ final class StraightEvaluatorTests: PokerKitTestCase {
       card(.seven, .hearts),
       card(.eight, .hearts),
     ]
-    let hasStraightFlush = sut.hasStraightFlush(holeCards: holeCards, communityCards: communityCards)
+    let hasStraightFlush = sut.hasStraightFlush(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectTrue(hasStraightFlush)
   }
 
@@ -135,7 +141,10 @@ final class StraightEvaluatorTests: PokerKitTestCase {
       card(.five, .clubs),
       card(.six, .hearts),
     ]
-    let hasStraightFlush = sut.hasStraightFlush(holeCards: holeCards, communityCards: communityCards)
+    let hasStraightFlush = sut.hasStraightFlush(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectTrue(hasStraightFlush)
   }
 
@@ -146,7 +155,10 @@ final class StraightEvaluatorTests: PokerKitTestCase {
       card(.five, .hearts),
       card(.six, .diamonds),
     ]
-    let hasStraightFlush = sut.hasStraightFlush(holeCards: holeCards, communityCards: communityCards)
+    let hasStraightFlush = sut.hasStraightFlush(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasStraightFlush)
   }
 
@@ -156,7 +168,10 @@ final class StraightEvaluatorTests: PokerKitTestCase {
       card(.four, .hearts),
       card(.five, .hearts),
     ]
-    let hasStraightFlush = sut.hasStraightFlush(holeCards: holeCards, communityCards: communityCards)
+    let hasStraightFlush = sut.hasStraightFlush(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasStraightFlush)
   }
 
@@ -170,7 +185,10 @@ final class StraightEvaluatorTests: PokerKitTestCase {
       card(.eight, .hearts),
       card(.nine, .hearts),
     ]
-    let hasStraightFlush = sut.hasStraightFlush(holeCards: holeCards, communityCards: communityCards)
+    let hasStraightFlush = sut.hasStraightFlush(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasStraightFlush)
   }
 
@@ -183,7 +201,10 @@ final class StraightEvaluatorTests: PokerKitTestCase {
       card(.seven, .hearts),
       card(.eight, .hearts),
     ]
-    let hasStraightFlush = sut.hasStraightFlush(holeCards: holeCards, communityCards: communityCards)
+    let hasStraightFlush = sut.hasStraightFlush(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasStraightFlush)
   }
 }

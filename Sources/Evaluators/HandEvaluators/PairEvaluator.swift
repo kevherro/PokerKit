@@ -84,7 +84,9 @@ public struct PairEvaluator {
     communityCards: [Card]
   ) -> Bool {
     guard check(holeCards: holeCards, communityCards: communityCards) else { return false }
-    guard let secondHighestRankInCommunity = secondHighestRank(in: communityCards) else { return false }
+    guard let secondHighestRankInCommunity = secondHighestRank(in: communityCards) else {
+      return false
+    }
     return holeCards.contains(where: { $0.rank == secondHighestRankInCommunity })
   }
 

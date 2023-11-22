@@ -142,7 +142,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.five, .hearts),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectTrue(hasTopPairTopKicker)
   }
 
@@ -153,7 +156,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.five, .hearts),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectTrue(hasTopPairTopKicker)
   }
 
@@ -164,7 +170,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.king, .hearts),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectTrue(hasTopPairTopKicker)
   }
 
@@ -175,7 +184,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.ace, .spades),
       card(.ace, .diamonds),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectTrue(hasTopPairTopKicker)
   }
 
@@ -186,7 +198,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.ace, .spades),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectTrue(hasTopPairTopKicker)
   }
 
@@ -197,7 +212,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.king, .spades),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasTopPairTopKicker)
   }
 
@@ -208,7 +226,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.five, .hearts),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasTopPairTopKicker)
   }
 
@@ -219,7 +240,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.king, .hearts),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasTopPairTopKicker)
   }
 
@@ -230,7 +254,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.ace, .hearts),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasTopPairTopKicker)
   }
 
@@ -241,7 +268,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.queen, .hearts),
       card(.two, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasTopPairTopKicker)
   }
 
@@ -260,7 +290,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.nine, .clubs),
       card(.eight, .clubs),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasTopPairTopKicker)
   }
 
@@ -271,7 +304,10 @@ final class PairEvaluatorTests: PokerKitTestCase {
       card(.king, .diamonds),
       card(.queen, .hearts),
     ]
-    let hasTopPairTopKicker = sut.hasTopPairTopKicker(holeCards: holeCards, communityCards: communityCards)
+    let hasTopPairTopKicker = sut.hasTopPairTopKicker(
+      holeCards: holeCards,
+      communityCards: communityCards
+    )
     expectFalse(hasTopPairTopKicker)
   }
 
