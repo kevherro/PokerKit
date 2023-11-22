@@ -85,7 +85,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasThreeToStraight)
   }
 
-  func testNoThreeToStraight_boardHasStraight() {
+  func testThreeToStraight_boardHasStraight() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -94,7 +94,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
       card(.eight, .hearts),
     ]
     let hasThreeToStraight = sut.hasThreeToStraight(cards: cards)
-    expectFalse(hasThreeToStraight)
+    expectTrue(hasThreeToStraight)
   }
 
   func testNoThreeToStraight_noPotentialStraight() {
@@ -149,6 +149,154 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     ]
     let hasThreeToStraight = sut.hasThreeToStraight(cards: cards)
     expectFalse(hasThreeToStraight)
+  }
+
+  // MARK: Three To Open Ended Straight
+
+  func testHasThreeToOpenEndedStraight_middleSequential() {
+    let cards = [
+      card(.four, .hearts),
+      card(.five, .hearts),
+      card(.six, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectTrue(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_middleOneGap() {
+    let cards = [
+      card(.four, .hearts),
+      card(.six, .hearts),
+      card(.seven, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_aceLowSequential() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.two, .hearts),
+      card(.three, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_aceLowOneGap() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.three, .hearts),
+      card(.four, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
+  }
+
+  func testThreeToOpenEndedStraight_lowSequential() {
+    let cards = [
+      card(.two, .hearts),
+      card(.three, .hearts),
+      card(.four, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectTrue(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_aceHighSequential() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.king, .hearts),
+      card(.queen, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_aceHighOneGap() {
+    let cards = [
+      card(.ace, .hearts),
+      card(.queen, .hearts),
+      card(.jack, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
+  }
+
+  func testThreeToOpenEndedStraight_highSequential() {
+    let cards = [
+      card(.king, .hearts),
+      card(.queen, .hearts),
+      card(.jack, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectTrue(hasThreeToOpenEndedStraight)
+  }
+
+  func testThreeToOpenEndedStraight_boardHasStraight() {
+    let cards = [
+      card(.four, .hearts),
+      card(.five, .hearts),
+      card(.six, .hearts),
+      card(.seven, .hearts),
+      card(.eight, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectTrue(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_noPotentialStraight() {
+    let cards = [
+      card(.four, .hearts),
+      card(.eight, .hearts),
+      card(.ten, .hearts),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_duplicates() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .diamonds),
+      card(.four, .clubs),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
+  }
+
+  func testThreeToOpenEndedStraight_duplicates() {
+    let cards = [
+      card(.four, .hearts),
+      card(.four, .diamonds),
+      card(.four, .clubs),
+      card(.five, .clubs),
+      card(.six, .clubs),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectTrue(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_tooFewCards() {
+    let cards = [
+      card(.four, .hearts),
+      card(.five, .diamonds),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
+  }
+
+  func testNoThreeToOpenEndedStraight_tooManyCards() {
+    let cards = [
+      card(.four, .hearts),
+      card(.five, .diamonds),
+      card(.six, .diamonds),
+      card(.eight, .diamonds),
+      card(.nine, .diamonds),
+      card(.ten, .diamonds),
+    ]
+    let hasThreeToOpenEndedStraight = sut.hasThreeToOpenEndedStraight(cards: cards)
+    expectFalse(hasThreeToOpenEndedStraight)
   }
 
   // MARK: Four To A Straight
@@ -219,7 +367,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasFourToStraight)
   }
 
-  func testNoFourToStraight_boardHasStraight() {
+  func testFourToStraight_boardHasStraight() {
     let cards = [
       card(.four, .hearts),
       card(.five, .hearts),
@@ -228,7 +376,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
       card(.eight, .hearts),
     ]
     let hasFourToStraight = sut.hasFourToStraight(cards: cards)
-    expectFalse(hasFourToStraight)
+    expectTrue(hasFourToStraight)
   }
 
   func testNoFourToStraight_noPotentialStraight() {
@@ -410,7 +558,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
     expectTrue(hasOnePair)
   }
 
-  func testNoPair_tooManyPairs() {
+  func testOnePair_twoPairs() {
     let cards = [
       card(.four, .hearts),
       card(.four, .diamonds),
@@ -418,7 +566,7 @@ final class BoardEvaluatorTests: PokerKitTestCase {
       card(.five, .diamonds),
     ]
     let hasOnePair = sut.hasOnePair(cards: cards)
-    expectFalse(hasOnePair)
+    expectTrue(hasOnePair)
   }
 
   func testOnePair_tooFewCards() {
