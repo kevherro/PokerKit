@@ -40,7 +40,7 @@ struct VeryScaryBoardTypeFactory {
     case .twoPair:
       return VeryScaryBoard_TwoPair()
     default:
-      fatalError()
+      fatalError("N/A")
     }
   }
 }

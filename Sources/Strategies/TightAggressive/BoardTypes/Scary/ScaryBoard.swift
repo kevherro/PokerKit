@@ -29,12 +29,12 @@ struct ScaryBoardTypeFactory {
     switch label {
     case .onePair:
       return ScaryBoard_OnePair(isAceHigh: isAceHigh)
-    case .threeToStraight:
-      return ScaryBoard_ThreeToStraight(isAceHigh: isAceHigh)
+    case .threeToOpenEndedStraight:
+      return ScaryBoard_ThreeToOpenEndedStraight(isAceHigh: isAceHigh)
     case .threeToFlush:
       return ScaryBoard_ThreeToFlush(isAceHigh: isAceHigh)
     default:
-      fatalError()
+      fatalError("N/A")
     }
   }
 }
@@ -58,7 +58,7 @@ struct ScaryBoard_OnePair: BoardTypeProtocol {
   }
 }
 
-struct ScaryBoard_ThreeToStraight: BoardTypeProtocol {
+struct ScaryBoard_ThreeToOpenEndedStraight: BoardTypeProtocol {
   private let isAceHigh: Bool
 
   init(isAceHigh: Bool) {

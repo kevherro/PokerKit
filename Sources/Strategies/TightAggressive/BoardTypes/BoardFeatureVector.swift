@@ -13,7 +13,7 @@ enum BoardFeatureLabel {
   case onePair
   case twoPair
   case threeToFlush
-  case threeToStraight
+  case threeToOpenEndedStraight
   case fourToFlush
   case fourToStraight
   case possibleStraightPossibleFlush
@@ -39,8 +39,8 @@ struct BoardFeatureVector {
       return .threeToFlush
     }
 
-    if features == [.threeToStraight] {
-      return .threeToStraight
+    if features == [.threeToOpenEndedStraight] {
+      return .threeToOpenEndedStraight
     }
 
     if features == [.fourToFlush] {
@@ -61,8 +61,8 @@ struct BoardFeatureVector {
       return .possibleFlushOnePair
     }
 
-    if features == [.threeToStraight, .threeToFlush]
-      || features == [.threeToStraight, .fourToFlush]
+    if features == [.threeToOpenEndedStraight, .threeToFlush]
+      || features == [.threeToOpenEndedStraight, .fourToFlush]
       || features == [.fourToStraight, .threeToFlush]
       || features == [.fourToStraight, .fourToFlush]
     {
@@ -78,7 +78,7 @@ struct BoardFeatureVector {
       .onePair: evaluator.hasOnePair(cards: cards),
       .twoPair: evaluator.hasTwoPair(cards: cards),
       .threeToFlush: evaluator.hasThreeToFlush(cards: cards),
-      .threeToStraight: evaluator.hasThreeToStraight(cards: cards),
+      .threeToOpenEndedStraight: evaluator.hasThreeToOpenEndedStraight(cards: cards),
       .fourToFlush: evaluator.hasFourToFlush(cards: cards),
       .fourToStraight: evaluator.hasFourToStraight(cards: cards),
     ]
@@ -90,16 +90,16 @@ struct BoardFeatureVector {
     let features = vector.filter(\.value).map(\.key)
     var reducedFeatures = Set(features)
 
+    if reducedFeatures.contains(.threeToOpenEndedStraight)
+      && reducedFeatures.contains(.fourToStraight)
+    {
+      reducedFeatures.remove(.threeToOpenEndedStraight)
+    }
+
     if reducedFeatures.contains(.threeToFlush)
       && reducedFeatures.contains(.fourToFlush)
     {
       reducedFeatures.remove(.threeToFlush)
-    }
-
-    if reducedFeatures.contains(.threeToStraight)
-      && reducedFeatures.contains(.fourToStraight)
-    {
-      reducedFeatures.remove(.threeToStraight)
     }
 
     if reducedFeatures.contains(.onePair)

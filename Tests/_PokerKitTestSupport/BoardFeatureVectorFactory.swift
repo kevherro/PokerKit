@@ -28,11 +28,11 @@ public struct BoardFeatureVectorFactory {
         card(.ace, .diamonds),
         card(.king, .hearts),
       ]
-    case .threeToStraight:
+    case .threeToOpenEndedStraight:
       return [
-        card(.king, .hearts),
         card(.queen, .diamonds),
         card(.jack, .hearts),
+        card(.ten, .spades),
       ]
     case .threeToFlush:
       return [

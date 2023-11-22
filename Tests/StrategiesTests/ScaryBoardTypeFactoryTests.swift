@@ -20,8 +20,8 @@ final class ScaryBoardTypeFactoryTests: PokerKitTestCase {
   }
 
   func testThreeToStraight() {
-    let boardType = makeBoardType(for: .threeToStraight)
-    expectTrue(boardType is ScaryBoard_ThreeToStraight)
+    let boardType = makeBoardType(for: .threeToOpenEndedStraight)
+    expectTrue(boardType is ScaryBoard_ThreeToOpenEndedStraight)
   }
 
   func testThreeToFlush() {

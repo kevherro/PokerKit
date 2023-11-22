@@ -47,12 +47,12 @@ final class BoardFeatureVectorTests: PokerKitTestCase {
 
   func testThreeToStraight() {
     let cards = [
-      card(.king, .hearts),
       card(.queen, .diamonds),
       card(.jack, .hearts),
+      card(.ten, .spades),
     ]
     let vector = BoardFeatureVector(cards: cards)
-    expectEqual(vector.label, .threeToStraight)
+    expectEqual(vector.label, .threeToOpenEndedStraight)
   }
 
   // MARK: Very Scary

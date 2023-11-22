@@ -19,7 +19,7 @@ struct BoardTypeFactory {
     init(label: BoardFeatureLabel?) {
       switch label {
       case .onePair,
-        .threeToStraight,
+        .threeToOpenEndedStraight,
         .threeToFlush:
         self = .scary
       case .twoPair,
