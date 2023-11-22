@@ -13,26 +13,39 @@ protocol BoardTypeProtocol {
 }
 
 struct BoardTypeFactory {
-  func makeBoardType(cards: [Card]) -> BoardTypeProtocol {
-    let context = BoardContextBuilder().build(cards: cards)
+  private enum BoardTexture {
+    case veryScary, scary, nonScary
 
-    if let label = context.vector.label {
-      if isVeryScary(label: label) {
-        return VeryScaryBoard(context: context)
-      } else {
-        return ScaryBoard(context: context)
+    init(label: BoardFeatureLabel?) {
+      switch label {
+      case .onePair,
+        .threeToStraight,
+        .threeToFlush:
+        self = .scary
+      case .twoPair,
+        .fourToStraight,
+        .fourToFlush,
+        .fourToStraightOnePair,
+        .possibleFlushOnePair,
+        .possibleStraightPossibleFlush:
+        self = .veryScary
+      default:
+        self = .nonScary
       }
-    } else {
-      return NonScaryBoard(context: context)
     }
   }
 
-  private func isVeryScary(label: BoardFeatureLabel) -> Bool {
-    return label == .possibleStraightPossibleFlush
-      || label == .fourToFlush
-      || label == .fourToStraight
-      || label == .fourToStraightOnePair
-      || label == .possibleFlushOnePair
-      || label == .twoPair
+  func makeBoardType(cards: [Card]) -> BoardTypeProtocol {
+    let context = BoardContextBuilder().build(cards: cards)
+    let texture = BoardTexture(label: context.vector.label)
+
+    switch texture {
+    case .veryScary:
+      return VeryScaryBoard(context: context)
+    case .scary:
+      return ScaryBoard(context: context)
+    case .nonScary:
+      return NonScaryBoard(context: context)
+    }
   }
 }
