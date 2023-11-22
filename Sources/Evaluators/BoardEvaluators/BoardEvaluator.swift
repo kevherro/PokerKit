@@ -36,8 +36,7 @@ public struct BoardEvaluator {
     let frequencies = rankFrequencies(cards.ranks())
     for i in 2..<frequencies.count - 3 {
       let slice = frequencies[i...i + 2]
-      let isSequential = slice.allSatisfy({ $0 })
-      if isSequential {
+      if slice.allSatisfy({ $0 }) {
         return true
       }
     }
