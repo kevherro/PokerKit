@@ -12,4 +12,16 @@ import _PokerKitTestSupport
 
 final class MinGoodHandEvaluatorTests_FourToStraightOnePair: PokerKitTestCase {
   private let sut = MinGoodHandEvaluator()
+
+  func testFourToStraightOnePair_river() {
+    let communityCards = [
+      card(.ace, .hearts),
+      card(.ace, .diamonds),
+      card(.king, .hearts),
+      card(.queen, .spades),
+      card(.jack, .clubs),
+    ]
+    let minGoodHand = sut.minGoodHand(communityCards: communityCards, street: .river)
+    expectEqual(minGoodHand, MinGoodHand.fullHouse)
+  }
 }
