@@ -8,19 +8,14 @@
 
 import Types
 
-protocol StrategyProtocol {
+struct TightAggressiveStrategy: StrategyProtocol {
+  private let minGoodHandEvaluator = MinGoodHandEvaluator()
+
   func isMinGoodHand(
     for street: Street,
     holeCards: [Card],
     communityCards: [Card]
-  ) -> Bool
-}
-
-struct StrategyFactory {
-  func makeStrategy(_ strategy: Strategy) -> StrategyProtocol {
-    switch strategy {
-    case .tightAggressive:
-      return TightAggressiveStrategy()
-    }
+  ) -> Bool {
+    fatalError("NOT IMPLEMENTED!")
   }
 }
